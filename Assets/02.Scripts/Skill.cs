@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
 {
-    public abstract bool Play(Player gameObject);
+    public abstract bool Play(Player playerObject);
 }

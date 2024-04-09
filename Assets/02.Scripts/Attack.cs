@@ -6,10 +6,16 @@ public class Attack : Skill
 {
     private const string KeyIsAttack = "IsAttack01";
     public GameObject player;
-    public override bool Play(Player gameObject)
+
+    public void Start()
     {
-        transform.position = player.transform.position;
-        Animator animator = gameObject.GetComponent<Animator>();
+        //playerObject = GameObject.FindGameObjectWithTag("Player");
+    }
+       
+    public override bool Play(Player playerObject)
+    {
+        this.transform.position = playerObject.transform.position;
+        Animator animator = playerObject.GetComponent<Animator>();
         animator.SetBool(KeyIsAttack, true);
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
         {

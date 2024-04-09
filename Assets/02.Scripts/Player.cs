@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
         if (isSkillEnd)
         {
             currentIndex = (currentIndex + 1) % container.Length;
-            Debug.Log(currentIndex);
         }
         ActivateSkill(container[currentIndex]);
     }
