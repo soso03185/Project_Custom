@@ -30,10 +30,9 @@ public class Attack : Skill
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.CompareTag("Enemy"))
+        if (collider.gameObject.CompareTag("Monster"))
         {
             Debug.Log("Hit");
-
         }
     }
 }

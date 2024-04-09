@@ -348,6 +348,11 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 1859591714}
+    - target: {fileID: 8740717495548372074, guid: d0d887a513cdb194b8fca93dd5d6220a,
+        type: 3}
+      propertyPath: maxMonster
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -369,7 +374,7 @@ PrefabInstance:
     - target: {fileID: 5507917526166007414, guid: 68a0392e7da2c4b4e9882c6b2a094b33,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.043489
+      value: -5.52
       objectReference: {fileID: 0}
     - target: {fileID: 5507917526166007414, guid: 68a0392e7da2c4b4e9882c6b2a094b33,
         type: 3}
@@ -379,7 +384,7 @@ PrefabInstance:
     - target: {fileID: 5507917526166007414, guid: 68a0392e7da2c4b4e9882c6b2a094b33,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.9919994
+      value: 2.18
       objectReference: {fileID: 0}
     - target: {fileID: 5507917526166007414, guid: 68a0392e7da2c4b4e9882c6b2a094b33,
         type: 3}

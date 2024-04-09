@@ -940,7 +940,7 @@ GameObject:
   - component: {fileID: 1719424112500189810}
   - component: {fileID: 3478773435835262106}
   m_Layer: 0
-  m_Name: DogPBR
+  m_Name: Monster
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

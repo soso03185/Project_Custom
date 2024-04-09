@@ -32,7 +32,7 @@ public class SpawnSystem : MonoBehaviour
 
                 Vector3 spawnPosition = GetRandomPositionAroundPlayer();
 
-                bool overlap = CheckOverlap(spawnPosition);
+                //bool overlap = CheckOverlap(spawnPosition);
 
                 Instantiate(monsterPrefab, spawnPosition, Quaternion.identity);
                 monsterSpawnPos.Add(spawnPosition);
@@ -55,15 +55,15 @@ public class SpawnSystem : MonoBehaviour
         return randomPosition;
     }
 
-    bool CheckOverlap(Vector3 pos)
-    {
-        foreach (Vector3 spawnPos in monsterSpawnPos)
-        {
-            if (Vector3.Distance(pos, spawnPos) < spawnRadius * 2)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+    //bool CheckOverlap(Vector3 pos)
+    //{
+    //    foreach (Vector3 spawnPos in monsterSpawnPos)
+    //    {
+    //        if (Vector3.Distance(pos, spawnPos) < spawnRadius * 2)
+    //        {
+    //            return true;
+    //        }
+    //    }
+    //    return false;
+    //}
 }
