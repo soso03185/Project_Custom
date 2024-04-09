@@ -26,28 +26,28 @@ public class SampleAnimation : MonoBehaviour
     void Update()
     {
         // 矢印上ボタンを押下している
-        if (Input.GetKey(KeyCode.UpArrow)||(Input.GetKey(KeyCode.DownArrow)) || (Input.GetKey(KeyCode.LeftArrow)) || (Input.GetKey(KeyCode.RightArrow)))
-        {
-            // IdleからRunに遷移する
-            this.animator.SetBool(key_isRun, true);
-        }
-        else
-        { 
-            // RunからIdleに遷移する
-            this.animator.SetBool(key_isRun, false);
-        }
+        //if (Input.GetKey(KeyCode.UpArrow)||(Input.GetKey(KeyCode.DownArrow)) || (Input.GetKey(KeyCode.LeftArrow)) || (Input.GetKey(KeyCode.RightArrow)))
+        //{
+        //    // IdleからRunに遷移する
+        //    this.animator.SetBool(key_isRun, true);
+        //}
+        //else
+        //{ 
+        //    // RunからIdleに遷移する
+        //    this.animator.SetBool(key_isRun, false);
+        //}
 
         // パンチ aを押す
-        if (Input.GetKeyUp("a"))
-        {
-            //Attack01に遷移する
-            this.animator.SetBool(key_isAttack01, true);
-        }
-        else
-        {
-            // Attack01からIdleに遷移する
-            this.animator.SetBool(key_isAttack01, false);
-        }
+        //if (Input.GetKey("a"))
+        //{
+        //    //Attack01に遷移する
+        //    this.animator.SetBool(key_isAttack01, true);
+        //}
+        //else
+        //{
+        //    // Attack01からIdleに遷移する
+        //    this.animator.SetBool(key_isAttack01, false);
+        //}
 		
 		// キック sを押す
         if (Input.GetKeyUp("s"))
@@ -90,6 +90,10 @@ public class SampleAnimation : MonoBehaviour
         {
             //Deadに遷移する
             this.animator.SetBool(key_isDead, true);
+        }
+        else
+        {
+            this.animator.SetBool(key_isDead, false);
         }
     }
 }
