@@ -138,4 +138,23 @@ public class MonsterScript : MonoBehaviour
     {
         monsterState = state;
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // JaeHyeon
+        {
+            if (other.gameObject.CompareTag("Skill"))
+            {
+                Debug.Log("Hit");
+                IsDamaged(1);
+            }
+        }
+    }
+
+    // JaeHyeon
+    void IsDamaged(float damage)
+    {
+        monsterHP -= ((int)damage - defense);
+    }
 }
