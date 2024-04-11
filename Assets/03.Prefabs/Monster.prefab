@@ -1004,6 +1004,7 @@ MonoBehaviour:
   attackRange: 2
   moveSpeed: 2
   target: {fileID: 0}
+  manager: {fileID: 4499072937444534790, guid: bd584fa49fd318f4bbbb38cc4890288b, type: 3}
 --- !u!136 &8350257378555581540
 CapsuleCollider:
   m_ObjectHideFlags: 0
