@@ -11,7 +11,7 @@ public class MonsterScript : MonoBehaviour
     MonsterState monsterState = MonsterState.spawn;
    
     public float monsterHP;
-
+    private float prevMonsterHP;
     public float MonsterHP
     { get { return monsterHP; } 
       set { 
@@ -46,21 +46,17 @@ public class MonsterScript : MonoBehaviour
 
         //nvAgent = this.gameObject.GetComponent<NavMeshAgent>();
 
-<<<<<<< Updated upstream
+
         //StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
-=======
+
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         manager.AddMonster(this);
-
-        StartCoroutine(this.CheckState());
-        StartCoroutine(this.CheckStateForAction());
     }
 
     public void OnDestroy()
     {
         manager.DeleteMonster(this);
->>>>>>> Stashed changes
     }
 
     //IEnumerator CheckState()
@@ -99,6 +95,9 @@ public class MonsterScript : MonoBehaviour
                     UpdateAttack();
                     UpdateBase();
                     break;
+                case MonsterState.hit:
+                    UpdateHit();
+                    break;
                 case MonsterState.dead:
                     UpdateDead();
                     break;
@@ -109,6 +108,14 @@ public class MonsterScript : MonoBehaviour
 
     void UpdateBase()
     {
+        if(monsterHP < prevMonsterHP)
+        {
+            ChangeState(MonsterState.hit);
+            anim.SetBool("isHit", true);
+        }
+
+        prevMonsterHP = monsterHP;
+
         if (monsterHP == 0)
         {
             ChangeState(MonsterState.dead);
@@ -145,6 +152,14 @@ public class MonsterScript : MonoBehaviour
         {
             ChangeState(MonsterState.move);
             anim.SetBool("isAttack", false);
+        }
+    }
+
+    void UpdateHit()
+    {
+        if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99)
+        {
+            anim.SetBool("isHit", false);
         }
     }
 

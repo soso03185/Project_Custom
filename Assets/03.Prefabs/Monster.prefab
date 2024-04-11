@@ -938,7 +938,7 @@ GameObject:
   - component: {fileID: 7569486070714707960}
   - component: {fileID: 8350257378555581540}
   - component: {fileID: 3478773435835262106}
-  - component: {fileID: 6277394173707028912}
+  - component: {fileID: -6338838541165170276}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Monster
@@ -996,15 +996,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd51aa9b5e31c854980b8039fd3905ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterState: 0
   monsterHP: 100
   attack: 0
-  defense: 1
+  defense: 0
   attackSpeed: 0
   attackRange: 2
   moveSpeed: 2
   target: {fileID: 0}
-  manager: {fileID: 4499072937444534790, guid: bd584fa49fd318f4bbbb38cc4890288b, type: 3}
+  manager: {fileID: 0}
 --- !u!136 &8350257378555581540
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1050,7 +1049,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!54 &6277394173707028912
+--- !u!54 &-6338838541165170276
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1075,7 +1074,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!1 &3790884040381419236
 GameObject:

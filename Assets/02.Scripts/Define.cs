@@ -9,6 +9,7 @@ public class Define
         spawn,
         move,
         attack, 
+        hit,
         dead
     };
 }

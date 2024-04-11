@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
+//using System.Numerics;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,7 +26,11 @@ public class Move : Skill
         Animator animator = playerObject.GetComponent<Animator>();
         animator.SetBool(KeyIsMove, true);
 
-       target = gameManager.GetNearestMonster();
+
+        if(target == null)
+        {
+            target = gameManager.GetNearestMonster();
+        }
 
         if (target == null)
         {
@@ -36,7 +40,9 @@ public class Move : Skill
 
         direction.y = 0;
 
-        transform.position += direction * playerSpeed * Time.deltaTime;
+        playerObject.transform.rotation = Quaternion.LookRotation(direction);
+
+        playerObject.transform.position += direction * playerSpeed * Time.deltaTime;
 
         elapsedDistance = Vector3.Distance(target.transform.position, playerObject.transform.position);
 
