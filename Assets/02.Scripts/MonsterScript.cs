@@ -29,7 +29,7 @@ public class MonsterScript : MonoBehaviour
     public int attackRange;
 
     public int moveSpeed;
-    private NavMeshAgent nvAgent;
+    //private NavMeshAgent nvAgent;
 
     public Transform target;
     Animator anim;
