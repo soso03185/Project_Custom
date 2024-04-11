@@ -220,6 +220,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skill-Attack
       objectReference: {fileID: 0}
+    - target: {fileID: 1975797638767772890, guid: e41c0de581c2a8249807d09513ba7fbf,
+        type: 3}
+      propertyPath: m_TagString
+      value: Skill
+      objectReference: {fileID: 0}
     - target: {fileID: 5499694262571713155, guid: e41c0de581c2a8249807d09513ba7fbf,
         type: 3}
       propertyPath: m_LocalPosition.x
