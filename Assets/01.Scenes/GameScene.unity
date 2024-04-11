@@ -351,7 +351,7 @@ PrefabInstance:
     - target: {fileID: 8740717495548372074, guid: d0d887a513cdb194b8fca93dd5d6220a,
         type: 3}
       propertyPath: maxMonster
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
