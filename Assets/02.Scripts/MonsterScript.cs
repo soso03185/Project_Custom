@@ -34,6 +34,8 @@ public class MonsterScript : MonoBehaviour
     public Transform target;
     Animator anim;
 
+    public GameManager manager;
+
     private bool isDead = false;
 
     // Start is called before the first frame update
@@ -44,8 +46,21 @@ public class MonsterScript : MonoBehaviour
 
         //nvAgent = this.gameObject.GetComponent<NavMeshAgent>();
 
+<<<<<<< Updated upstream
         //StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
+=======
+        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        manager.AddMonster(this);
+
+        StartCoroutine(this.CheckState());
+        StartCoroutine(this.CheckStateForAction());
+    }
+
+    public void OnDestroy()
+    {
+        manager.DeleteMonster(this);
+>>>>>>> Stashed changes
     }
 
     //IEnumerator CheckState()

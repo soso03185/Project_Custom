@@ -14,13 +14,14 @@ public class Attack : Skill
        
     public override bool Play(Player playerObject)
     {
-        this.transform.position = playerObject.transform.position;
+        
         Animator animator = playerObject.GetComponent<Animator>();
         animator.SetBool(KeyIsAttack, true);
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
         {
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
+                this.transform.position = playerObject.transform.position;
                 animator.SetBool(KeyIsAttack, false);
                 return true;
             }
