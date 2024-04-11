@@ -914,8 +914,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4679013640650686}
   - component: {fileID: 95154219944295818}
-  - component: {fileID: 114620049534756106}
   - component: {fileID: 114485262007393730}
+  - component: {fileID: 2392790894287773407}
   m_Layer: 0
   m_Name: Chara_4Hero
   m_TagString: Untagged
@@ -961,18 +961,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &114620049534756106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446535677835012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0ba25a962d71894b8027f5e230790df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114485262007393730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,6 +1035,24 @@ MonoBehaviour:
   - {fileID: 114647366317098476}
   - {fileID: 114381092608040870}
   - {fileID: 114159397791016506}
+--- !u!114 &2392790894287773407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446535677835012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7505d7ed9f5bde439638157e2f1b048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  container:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1456414790819720
 GameObject:
   m_ObjectHideFlags: 0
