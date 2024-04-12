@@ -29,8 +29,7 @@ public class MonsterScript : MonoBehaviour
     public float attackRange;
 
     public int moveSpeed;
-    //private NavMeshAgent nvAgent;
-
+    
     public Transform target;
     Animator anim;
 
@@ -44,41 +43,12 @@ public class MonsterScript : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
         anim = GetComponent<Animator>();
 
-        //nvAgent = this.gameObject.GetComponent<NavMeshAgent>();
-
-
-        //StartCoroutine(this.CheckState());
-        StartCoroutine(this.CheckStateForAction());
-
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         manager.AddMonster(this);
     }
 
-    public void OnDestroy()
-    {
-        manager.DeleteMonster(this);
-    }
 
-    //IEnumerator CheckState()
-    //{
-    //    while (!isDead)
-    //    {
-    //        yield return new WaitForSeconds(0.2f);
-
-    //        float dist = Vector3.Distance(target.position, transform.position);
-
-    //        if (dist < attackRange)
-    //        {
-    //            monsterState = State.attack;
-    //        }
-    //        else
-    //        {
-    //            monsterState = State.move;
-    //        }
-    //    }
-    //}
-
-    IEnumerator CheckStateForAction()
+    void Update()
     {
         while (!isDead)
         {
@@ -102,10 +72,13 @@ public class MonsterScript : MonoBehaviour
                     UpdateDead();
                     break;
             }
-            yield return null;
         }
     }
 
+    public void OnDestroy()
+    {
+        manager.DeleteMonster(this);
+    }
     void UpdateBase()
     {
         if(monsterHP < prevMonsterHP)
@@ -132,9 +105,6 @@ public class MonsterScript : MonoBehaviour
 
     void UpdateMove()
     {
-        //nvAgent.isStopped = false;
-        //nvAgent.destination = target.position;
-
         transform.position += LookAtPlayer() * moveSpeed * Time.deltaTime;
 
         if (GetDistance(target.position, transform.position) < attackRange)
