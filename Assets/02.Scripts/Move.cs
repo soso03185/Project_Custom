@@ -13,7 +13,7 @@ public class Move : Skill
 
     public float playerSpeed;
     public float attackRange;
-    private float elapsedDistance = 0;
+    private float _targetDistance = 0;
 
     private const string KeyIsMove = "IsRun";
 
@@ -26,7 +26,6 @@ public class Move : Skill
         Animator animator = playerObject.GetComponent<Animator>();
         animator.SetBool(KeyIsMove, true);
 
-
         if(target == null)
         {
             target = gameManager.GetNearestMonster();
@@ -36,23 +35,23 @@ public class Move : Skill
         {
             return false;
         }
+
         Vector3 direction = (target.transform.position - playerObject.transform.position).normalized;
 
         direction.y = 0;
 
         playerObject.transform.rotation = Quaternion.LookRotation(direction);
 
-        playerObject.transform.position += direction * playerSpeed * Time.deltaTime;
+        _targetDistance = Vector3.Distance(target.transform.position, playerObject.transform.position);
 
-        elapsedDistance = Vector3.Distance(target.transform.position, playerObject.transform.position);
-
-        //elapsedDistance += Time.deltaTime;
-        //playerObject.transform.Translate(Vector3.forward * Time.deltaTime);
-        if (elapsedDistance <= attackRange)
+        if (_targetDistance <= attackRange)
         {
             animator.SetBool(KeyIsMove, false);
+            target = null;
             return true;
         }
+
+        playerObject.transform.position += direction * playerSpeed * Time.deltaTime;
         return false;
     }
 }
