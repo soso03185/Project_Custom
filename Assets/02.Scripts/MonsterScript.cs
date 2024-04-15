@@ -6,21 +6,23 @@ using UnityEngine.AI;
 using UnityEngine.UIElements;
 using static Define;
 
-public class MonsterScript : MonoBehaviour
+public class DemoMonster : IMonster
 {
-    MonsterState monsterState = MonsterState.spawn;
-   
+    public MonsterState monsterState = MonsterState.spawn;
+
     public float monsterHP;
     private float prevMonsterHP;
     public float MonsterHP
-    { get { return monsterHP; } 
-      set { 
-
-            if(monsterState != MonsterState.spawn)
-            {
+    {
+        get 
+        { 
+            return monsterHP;
+        }
+        set
+        {
+            if (monsterState != MonsterState.spawn)
                 monsterHP = value;
-            }
-        }    
+        }
     }
 
     public float attack;
@@ -29,13 +31,13 @@ public class MonsterScript : MonoBehaviour
     public float attackRange;
 
     public int moveSpeed;
-    
+
     public Transform target;
     Animator anim;
 
     public GameManager manager;
 
-    private bool isDead = false;
+    private bool isDead;
 
     // Start is called before the first frame update
     void Start()
@@ -47,31 +49,26 @@ public class MonsterScript : MonoBehaviour
         manager.AddMonster(this);
     }
 
-
     void Update()
     {
-        while (!isDead)
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        switch (monsterState)
         {
-            switch (monsterState)
-            {
-                case MonsterState.spawn:
-                    UpdateSpawn();
-                    break;
-                case MonsterState.move:
-                    UpdateMove();
-                    UpdateBase();
-                    break;
-                case MonsterState.attack:
-                    UpdateAttack();
-                    UpdateBase();
-                    break;
-                case MonsterState.hit:
-                    UpdateHit();
-                    break;
-                case MonsterState.dead:
-                    UpdateDead();
-                    break;
-            }
+            case MonsterState.move:
+                UpdateBase();
+                UpdateMove();
+                break;
+            case MonsterState.attack:
+                UpdateAttack();
+                UpdateBase();
+                break;
+            case MonsterState.hit:
+                UpdateHit();
+                break;
+            case MonsterState.dead:
+                UpdateDead();
+                break;
         }
     }
 
@@ -79,12 +76,12 @@ public class MonsterScript : MonoBehaviour
     {
         manager.DeleteMonster(this);
     }
+
     void UpdateBase()
     {
-        if(monsterHP < prevMonsterHP)
+        if (monsterHP < prevMonsterHP)
         {
             ChangeState(MonsterState.hit);
-            anim.SetBool("isHit", true);
         }
 
         prevMonsterHP = monsterHP;
@@ -92,50 +89,55 @@ public class MonsterScript : MonoBehaviour
         if (monsterHP == 0)
         {
             ChangeState(MonsterState.dead);
-            anim.SetBool("isDead", true);
         }
 
     }
 
     void UpdateSpawn()
     {
-        anim.SetTrigger("isSpawn");
         ChangeState(MonsterState.move);
     }
 
     void UpdateMove()
     {
+        anim.Play("Walk");
+        this.gameObject.GetComponent<Rigidbody>().mass = 1;
         transform.position += LookAtPlayer() * moveSpeed * Time.deltaTime;
 
         if (GetDistance(target.position, transform.position) < attackRange)
         {
             ChangeState(MonsterState.attack);
-            anim.SetBool("isAttack", true);
         }
     }
 
     void UpdateAttack()
     {
+        anim.Play("Attack");
+
+        this.gameObject.GetComponent<Rigidbody>().mass = 1000f;
         LookAtPlayer();
 
         if (GetDistance(target.position, transform.position) > attackRange)
         {
             ChangeState(MonsterState.move);
-            anim.SetBool("isAttack", false);
         }
     }
 
     void UpdateHit()
     {
-        if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99)
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99)
         {
-            anim.SetBool("isHit", false);
+            anim.Play("Hit");
+            ChangeState(MonsterState.move);
         }
     }
 
     void UpdateDead()
     {
         // 재화 및 경험치 얻는 처리?
+
+        this.gameObject.SetActive(false);
+        isDead = true;
     }
 
     void ChangeState(MonsterState state)
