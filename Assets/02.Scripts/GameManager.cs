@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public List<MonsterScript> monsters;// = new List<MonsterScript>();
+    public List<DemoMonster> monsters;// = new List<MonsterScript>();
     public Player player;
     // Start is called before the first frame update
     void Start()
@@ -22,12 +22,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void AddMonster(MonsterScript monster)
+    public void AddMonster(DemoMonster monster)
     {
         monsters.Add(monster);
     }
 
-    public void DeleteMonster(MonsterScript monster)
+    public void DeleteMonster(DemoMonster monster)
     {
         for (int i = 0; i < monsters.Count; i++)
         {

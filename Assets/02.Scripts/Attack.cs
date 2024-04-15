@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static IMonster;
 
 public class Attack : Skill
 {
     private const string KeyIsAttack = "IsAttack01";
     public GameObject player;
 
+    public IMonster monster; 
+
     public void Start()
     {
         //playerObject = GameObject.FindGameObjectWithTag("Player");
+        monster.HP = 100;
     }
        
     public override bool Play(Player playerObject)
