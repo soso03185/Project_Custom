@@ -1,12 +1,18 @@
 
-Shader "Study/URPBasic01"
+Shader "Study/AlphaTest01"
 {
    Properties 
    {
      _TintColor("Test Color", color) = (1, 1, 1, 1)
 	 _Intensity("Range Sample", Range(0, 1)) = 0.5
 	 _MainTex("Main Texture", 2D) = "white" {}
-	 _MainTex02("Main Texture02", 2D) = "white" {}
+
+     [Toggle] _AlphaOn("AlphaTest", float) = 1 // 아직 미적용
+     _AlphaCut("AlphaCut", Range(0,10)) = 1
+
+     [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Src Blend", Float) = 1
+     [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Dst Blend", Float) = 0
+     [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull Blend", Float) = 1
    }  
 
    SubShader
@@ -14,11 +20,15 @@ Shader "Study/URPBasic01"
 	    Tags
         {
 	        "RenderPipeline"="UniversalPipeline"
-            "RenderType"="Opaque"          
-            "Queue"="Geometry"
+            "RenderType"="TransparentCutout"          
+            "Queue"="Transparent"
         }
         Pass
     	{  		
+            Blend [_SrcBlend] [_DstBlend]
+            Cull [_Cull]
+          //  Zwrite off
+
      	    Name "Universal Forward"
             Tags {"LightMode" = "UniversalForward"}
 
@@ -32,11 +42,13 @@ HLSLPROGRAM
            
 	    half4 _TintColor;
 	    float _Intensity;
-        sampler2D _MainTex;
-        sampler2D _MainTex02;
-
+        
+     	Texture2D _MainTex;
         float4 _MainTex_ST;
-        float4 _MainTex02_ST;
+         
+        float _AlphaCut;
+
+        SamplerState sampler_MainTex;
 
     struct VertexInput
     {
@@ -55,21 +67,19 @@ HLSLPROGRAM
         VertexOutput o;
 
         o.vertex = TransformObjectToHClip(v.vertex.xyz);            
-        o.uv = v.uv * _MainTex_ST.xy + _MainTex_ST.zw * _Time.y;
+        o.uv = v.uv * _MainTex_ST.xy + _MainTex_ST.zw;
         return o;
     }
 
     half4 frag(VertexOutput i) : SV_Target
     {
-        float2 uv  = i.uv.xy  * _MainTex_ST.xy + _MainTex_ST.zw;	
-        float2 uv2 = i.uv.xy  * _MainTex02_ST.xy + _MainTex02_ST.zw;	
-
-        half4 col01 = tex2D(_MainTex, uv);
-        half4 col02 = tex2D(_MainTex02, uv2); 
-        half4 color = col01 + col02;
+        half4 color = _MainTex.Sample(sampler_MainTex, i.uv);
+        
+        color.rgb *= _TintColor;
+        color.a *= _AlphaCut;
 
         return color;
-    }
+ }
 
 ENDHLSL
     	}
