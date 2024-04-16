@@ -1,87 +1,93 @@
 
 Shader "Study/AlphaTest01"
 {
-   Properties 
-   {
-     _TintColor("Test Color", color) = (1, 1, 1, 1)
-	 _Intensity("Range Sample", Range(0, 1)) = 0.5
-	 _MainTex("Main Texture", 2D) = "white" {}
+	Properties
+	{
+	_TintColor("Test Color", color) = (1, 1, 1, 1)
+	_Intensity("Range Sample", Range(0, 1)) = 0.5
+	_MainTex("Main Texture", 2D) = "white" {}
+	
+	[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Src Blend", Float) = 1
+    [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Dst Blend", Float) = 0
+	[Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull Mode", Float) = 1
+	[Enum(Off, 0, On, 1)] _ZWrite("ZWrite", Float) = 0
+    [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("ZTest", Float) = 0
+	
+	_Factor("Factor", int) = 0
+	_Units("Units", int) = 0
 
-     [Toggle] _AlphaOn("AlphaTest", float) = 1 // 아직 미적용
-     _AlphaCut("AlphaCut", Range(0,10)) = 1
+	[Enum(Off, 0, On, 1)] _Mask ("Alpha to Coverage", Float) = 0
 
-     [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Src Blend", Float) = 1
-     [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Dst Blend", Float) = 0
-     [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull Blend", Float) = 1
-   }  
+	_Alpha("Alpha", Range(0,1)) = 0.5
+	}
 
-   SubShader
-   {  	
-	    Tags
-        {
-	        "RenderPipeline"="UniversalPipeline"
-            "RenderType"="TransparentCutout"          
-            "Queue"="Transparent"
-        }
-        Pass
-    	{  		
-            Blend [_SrcBlend] [_DstBlend]
-            Cull [_Cull]
-          //  Zwrite off
+	SubShader
+	{
+		Tags
+		{
+		 "RenderPipeline" = "UniversalPipeline"
+		 "RenderType" = "Transparent" 
+		 "Queue" = "Transparent"
+		}
 
-     	    Name "Universal Forward"
-            Tags {"LightMode" = "UniversalForward"}
+		Pass
+		{
+		 Blend[_SrcBlend][_DstBlend]  // Src는 텍스쳐의 알파값  // Dst는 백그라운드에 그려진 픽셀 값
+		 Cull[_Cull]
+		 ZWrite[_ZWrite]
+		 ZTest[_ZTest]
+				 
+		 Offset [_Factor],[_Units]
 
-HLSLPROGRAM
-        	#pragma prefer_hlslcc gles
-        	#pragma exclude_renderers d3d11_9x
-        	#pragma vertex vert
-        	#pragma fragment frag       	       	
+		 AlphaToMask [_Mask]
 
-       	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-           
-	    half4 _TintColor;
-	    float _Intensity;
-        
-     	Texture2D _MainTex;
-        float4 _MainTex_ST;
-         
-        float _AlphaCut;
+		Name "Universal Forward"
+		Tags {"LightMode" = "UniversalForward"}
 
-        SamplerState sampler_MainTex;
+		HLSLPROGRAM
+		#pragma prefer_hlslcc gles
+		#pragma exclude_renderers d3d11_9x
+		#pragma vertex vert
+		#pragma fragment frag
 
-    struct VertexInput
-    {
-	    float4 vertex       : POSITION;
-	    float2 uv           : TEXCOORD0;
-    };
+		#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
-    struct VertexOutput
-    {
-        float4 vertex   	: SV_POSITION;
-        float2 uv       	: TEXCOORD0;           	
-    };
+		half4 _TintColor;
+		float _Intensity;
+		float _Alpha;
 
-    VertexOutput vert(VertexInput v)
-    {
-        VertexOutput o;
+		float4 _MainTex_ST;
+		Texture2D _MainTex;
+		SamplerState sampler_MainTex;
 
-        o.vertex = TransformObjectToHClip(v.vertex.xyz);            
-        o.uv = v.uv * _MainTex_ST.xy + _MainTex_ST.zw;
-        return o;
-    }
+		struct VertexInput
+		  {
+		 float4 vertex : POSITION;
+		 float2 uv 	  : TEXCOORD0;
+		  };
 
-    half4 frag(VertexOutput i) : SV_Target
-    {
-        half4 color = _MainTex.Sample(sampler_MainTex, i.uv);
-        
-        color.rgb *= _TintColor;
-        color.a *= _AlphaCut;
+		struct VertexOutput
+		  {
+		   float4 vertex  	: SV_POSITION;
+		   float2 uv      	: TEXCOORD0;
+		  };
 
-        return color;
- }
+		VertexOutput vert(VertexInput v)
+		{
+			VertexOutput o;
+			o.vertex = TransformObjectToHClip(v.vertex.xyz);	
+			o.uv = v.uv.xy * _MainTex_ST.xy + _MainTex_ST.zw;
+			return o;
+		}
 
-ENDHLSL
-    	}
-     }
+		half4 frag(VertexOutput i) : SV_Target
+		{
+			float4 color = _MainTex.Sample(sampler_MainTex, i.uv);
+			color.rgb *= _TintColor * _Intensity;
+			color.a = color.a * _Alpha;
+			return color;
+		  }
+	          ENDHLSL
+	         }
+	}
 }

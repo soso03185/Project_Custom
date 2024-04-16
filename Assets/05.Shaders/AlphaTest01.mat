@@ -91,6 +91,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AIntensity: 0.5
+    - _Alpha: 1
     - _AlphaClip: 0
     - _AlphaCut: 2.81
     - _AlphaOn: 1
@@ -107,11 +108,13 @@ Material:
     - _DstBlend: 10
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
+    - _Factor: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Intencity: 0.45
     - _Intensity: 1
+    - _Mask: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -123,8 +126,10 @@ Material:
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _Units: 0
     - _WorkflowMode: 1
-    - _ZWrite: 1
+    - _ZTest: 0
+    - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
