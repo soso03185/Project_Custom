@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class MonsterManager : MonoBehaviour
 {
     public List<DemoMonster> monsters;// = new List<MonsterScript>();
     public Player player;
@@ -16,10 +16,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (monsters.Count != 0)
-        {
-            Debug.Log(monsters[0].transform);
-        }
+       
     }
 
     public void AddMonster(DemoMonster monster)

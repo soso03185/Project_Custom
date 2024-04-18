@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c643d9135471c40b3843282a32eee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 4499072937444534790, guid: bd584fa49fd318f4bbbb38cc4890288b,
+  gameManager: {fileID: 7670377380737661617, guid: 50ef0abc65be8de47bfd9dc4cc58449a,
     type: 3}
   target: {fileID: 0}
+  image: {fileID: 21300000, guid: 62caf8fa8077346f98e18477f3872a95, type: 3}
   playerSpeed: 0
   attackRange: 0

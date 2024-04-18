@@ -8,50 +8,58 @@ using Vector3 = UnityEngine.Vector3;
 
 public class Move : Skill
 {
-    public GameManager gameManager;
-    public GameObject target;
+    public MonsterManager m_monsterManager;
+
+    //public Sprite image;
 
     public float playerSpeed;
     public float attackRange;
     private float _targetDistance = 0;
 
+
     private const string KeyIsMove = "IsRun";
 
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        m_monsterManager = GameObject.Find("MonsterManager").GetComponent<MonsterManager>();
+        m_animator = GetComponent<Animator>();
     }
-    public override bool Play(Player playerObject)
+    public override IEnumerator Play(Player playerObject)
     {
-        Animator animator = playerObject.GetComponent<Animator>();
-        animator.SetBool(KeyIsMove, true);
+        GameObject target;
+        m_animator.SetBool(KeyIsMove, true);
 
-        if(target == null)
+        while (true)
         {
-            target = gameManager.GetNearestMonster();
+            target = m_monsterManager.GetNearestMonster();
+
+            if (target != null)
+            {
+                break;
+            }
+
+            yield return null;
         }
 
-        if (target == null)
+        while (true)
         {
-            return false;
+            Vector3 direction = (target.transform.position - playerObject.transform.position).normalized;
+
+            direction.y = 0;
+
+            playerObject.transform.rotation = Quaternion.LookRotation(direction);
+
+            _targetDistance = Vector3.Distance(target.transform.position, playerObject.transform.position);
+
+            if (_targetDistance <= attackRange)
+            {
+                m_animator.SetBool(KeyIsMove, false);
+                break;
+            }
+
+            playerObject.transform.position += direction * playerSpeed * Time.deltaTime;
+
+            yield return null;
         }
-
-        Vector3 direction = (target.transform.position - playerObject.transform.position).normalized;
-
-        direction.y = 0;
-
-        playerObject.transform.rotation = Quaternion.LookRotation(direction);
-
-        _targetDistance = Vector3.Distance(target.transform.position, playerObject.transform.position);
-
-        if (_targetDistance <= attackRange)
-        {
-            animator.SetBool(KeyIsMove, false);
-            target = null;
-            return true;
-        }
-
-        playerObject.transform.position += direction * playerSpeed * Time.deltaTime;
-        return false;
     }
 }

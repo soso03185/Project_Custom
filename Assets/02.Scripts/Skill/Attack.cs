@@ -8,29 +8,27 @@ public class Attack : Skill
     private const string KeyIsAttack = "IsAttack01";
     public GameObject player;
 
-    public IMonster monster; 
+    public IMonster monster;
 
     public void Start()
     {
-        //playerObject = GameObject.FindGameObjectWithTag("Player");
         monster.HP = 100;
     }
        
-    public override bool Play(Player playerObject)
+    public override IEnumerator Play(Player playerObject)
     {
-        
-        Animator animator = playerObject.GetComponent<Animator>();
-        animator.SetBool(KeyIsAttack, true);
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
+        m_animator = playerObject.GetComponent<Animator>();
+        m_animator.SetBool(KeyIsAttack, true);
+        if (m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            if (m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
                 this.transform.position = playerObject.transform.position;
-                animator.SetBool(KeyIsAttack, false);
-                return true;
+                m_animator.SetBool(KeyIsAttack, false);
+                yield return true;
             }
         }
-        return false;
+        yield return null;
     }
 
     private void OnTriggerEnter(Collider collider)

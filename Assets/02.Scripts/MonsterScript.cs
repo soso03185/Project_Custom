@@ -35,7 +35,7 @@ public class DemoMonster : IMonster
     public Transform target;
     Animator anim;
 
-    public GameManager manager;
+    public MonsterManager manager;
 
     private bool isDead;
 
@@ -45,7 +45,7 @@ public class DemoMonster : IMonster
         target = GameObject.FindGameObjectWithTag("Player").transform;
         anim = GetComponent<Animator>();
 
-        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        manager = GameObject.Find("MonsterManager").GetComponent<MonsterManager>();
         manager.AddMonster(this);
     }
 
