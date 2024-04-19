@@ -7,23 +7,27 @@ public class Player : MonoBehaviour
 {
     public ActionLogicManager m_logicManager;
 
-    private bool isSkillEnd = false;
-
     private int currentIndex = 0;
     // Start is called before the first frame update
     void Start()
     {
-
+        ActivateSkill(m_logicManager.m_actionLogic[currentIndex]);
     }
 
     // Update is called once per frame
     void Update()
     {
-        ActivateSkill(m_logicManager.m_actionLogic[currentIndex]);
+        
     }
 
     public void ActivateSkill(Skill skill)
     {
         StartCoroutine(skill.Play(this));
+    }
+
+    public void SkillEnd()
+    {
+        m_logicManager.NextAction();
+        ActivateSkill(m_logicManager.m_actionLogic[currentIndex]);
     }
 }

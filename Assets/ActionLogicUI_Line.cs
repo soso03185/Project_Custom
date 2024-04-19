@@ -25,15 +25,15 @@ public class ActionLogicUI_Line : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(UIMove());
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    StartCoroutine(UIMove());
+        //}
 
        
     }
 
-    IEnumerator UIMove()
+    public IEnumerator UIMove()
     {
         Vector3 currentPosition = m_transform.position;
 
@@ -41,7 +41,7 @@ public class ActionLogicUI_Line : MonoBehaviour
 
         while (true)
         {
-            elapsedTime += Time.deltaTime * 3;
+            elapsedTime += Time.deltaTime / m_manager.convertingTime;
             m_transform.position = Vector3.Lerp(currentPosition, currentPosition - new Vector3(200, 0, 0), elapsedTime);
 
             if(elapsedTime >= 1)

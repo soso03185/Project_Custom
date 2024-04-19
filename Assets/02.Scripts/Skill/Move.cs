@@ -21,12 +21,13 @@ public class Move : Skill
 
     void Start()
     {
-        m_monsterManager = GameObject.Find("MonsterManager").GetComponent<MonsterManager>();
-        m_animator = GetComponent<Animator>();
+        
+        
     }
     public override IEnumerator Play(Player playerObject)
     {
         GameObject target;
+        m_animator = playerObject.GetComponent<Animator>();
         m_animator.SetBool(KeyIsMove, true);
 
         while (true)
@@ -53,7 +54,6 @@ public class Move : Skill
 
             if (_targetDistance <= attackRange)
             {
-                m_animator.SetBool(KeyIsMove, false);
                 break;
             }
 
@@ -61,5 +61,7 @@ public class Move : Skill
 
             yield return null;
         }
+        m_animator.SetBool(KeyIsMove, false);
+        playerObject.SkillEnd();
     }
 }
