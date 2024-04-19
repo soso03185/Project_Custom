@@ -5,18 +5,21 @@ using UnityEngine;
 
 public class MonsterManager : MonoBehaviour
 {
-    public List<DemoMonster> monsters;// = new List<MonsterScript>();
+    public List<DemoMonster> monsters = new List<DemoMonster>();
     public Player player;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        if (monsters.Count != 0)
+        {
+            //Debug.Log(monsters[0].transform);
+        }
     }
 
     public void AddMonster(DemoMonster monster)
