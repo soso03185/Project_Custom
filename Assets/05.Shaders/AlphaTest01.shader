@@ -86,8 +86,8 @@ Shader "Study/AlphaTest01"
 			color.rgb *= _TintColor * _Intensity;
 			color.a = color.a * _Alpha;
 			return color;
-		  }
+		}
 	          ENDHLSL
-	         }
+	  }
 	}
 }
