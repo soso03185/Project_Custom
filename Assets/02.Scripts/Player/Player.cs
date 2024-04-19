@@ -5,8 +5,7 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
-    public static int size = 10;
-    public Skill[] container = new Skill[size];
+    public ActionLogicManager m_logicManager;
 
     private bool isSkillEnd = false;
 
@@ -20,15 +19,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isSkillEnd)
-        {
-            currentIndex = (currentIndex + 1) % container.Length;
-        }
-        ActivateSkill(container[currentIndex]);
+        ActivateSkill(m_logicManager.m_actionLogic[currentIndex]);
     }
 
     public void ActivateSkill(Skill skill)
     {
-        isSkillEnd = skill.Play(this);
+        StartCoroutine(skill.Play(this));
     }
 }

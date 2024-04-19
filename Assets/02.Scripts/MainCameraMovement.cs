@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainCameraMovement : MonoBehaviour
 {
     public GameObject m_player;
-
+    public float m_interpolationRatio = 0.05f;
     private Vector3 m_correction;
     // Start is called before the first frame update
     void Start()
@@ -17,6 +17,6 @@ public class MainCameraMovement : MonoBehaviour
     void Update()
     {
         Vector3 cameraDest = m_player.transform.position + m_correction;
-        transform.position = Vector3.Slerp(transform.position, cameraDest, 0.01f);
+        transform.position = Vector3.Lerp(transform.position, cameraDest, m_interpolationRatio);
     }
 }

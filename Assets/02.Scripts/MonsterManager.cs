@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class MonsterManager : MonoBehaviour
 {
     public List<DemoMonster> monsters = new List<DemoMonster>();
     public Player player;
