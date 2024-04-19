@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class MonsterManager : MonoBehaviour
 {
-    public List<DemoMonster> monsters;// = new List<MonsterScript>();
+    public List<DemoMonster> monsters = new List<DemoMonster>();
     public Player player;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     {
         if (monsters.Count != 0)
         {
-            Debug.Log(monsters[0].transform);
+            //Debug.Log(monsters[0].transform);
         }
     }
 

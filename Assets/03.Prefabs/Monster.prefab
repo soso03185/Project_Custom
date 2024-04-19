@@ -996,8 +996,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterState: 0
+  m_hp: 0
   monsterHP: 100
-  attack: 0
+  attack: 2
   defense: 0
   attackSpeed: 0
   attackRange: 2
@@ -1023,7 +1024,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 0.4
   m_Height: 1.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.61, z: 0}

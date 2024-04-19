@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Monster
   - Skill
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -42,4 +43,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: CurrentSkill
+    uniqueID: 1153075329
+    locked: 0
+  - name: Skill
+    uniqueID: 3171909699
     locked: 0

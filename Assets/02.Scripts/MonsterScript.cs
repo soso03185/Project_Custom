@@ -6,12 +6,16 @@ using UnityEngine.AI;
 using UnityEngine.UIElements;
 using static Define;
 
-public class DemoMonster : IMonster
+public class DemoMonster : MonoBehaviour
 {
+    [SerializeField]
     public MonsterState monsterState = MonsterState.spawn;
 
-    public float monsterHP;
-    private float prevMonsterHP;
+    [SerializeField]
+    public float m_hp {  get; set; }
+
+    [SerializeField]
+    float monsterHP;
     public float MonsterHP
     {
         get 
@@ -35,26 +39,33 @@ public class DemoMonster : IMonster
     public Transform target;
     Animator anim;
 
-    public GameManager manager;
+    public MonsterManager manager;
 
-    private bool isDead;
-
-    // Start is called before the first frame update
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
         anim = GetComponent<Animator>();
 
-        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        manager = GameObject.Find("MonsterManager").GetComponent<MonsterManager>();
         manager.AddMonster(this);
+    }
+
+    // 활성화 될 때마다 실행됨
+    private void OnEnable()
+    {
+        ResetMonster();
     }
 
     void Update()
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
         switch (monsterState)
         {
+            case MonsterState.spawn:
+                StartCoroutine(UpdateSpawn());
+                break;
             case MonsterState.move:
                 UpdateBase();
                 UpdateMove();
@@ -64,43 +75,35 @@ public class DemoMonster : IMonster
                 UpdateBase();
                 break;
             case MonsterState.hit:
-                UpdateHit();
+                StartCoroutine(UpdateHit());
+                UpdateBase();
                 break;
             case MonsterState.dead:
-                UpdateDead();
+                StartCoroutine(UpdateDead());
                 break;
         }
-    }
-
-    public void OnDestroy()
-    {
-        manager.DeleteMonster(this);
     }
 
     void UpdateBase()
     {
-        if (monsterHP < prevMonsterHP)
-        {
-            ChangeState(MonsterState.hit);
-        }
-
-        prevMonsterHP = monsterHP;
-
         if (monsterHP == 0)
         {
             ChangeState(MonsterState.dead);
         }
-
     }
 
-    void UpdateSpawn()
+    IEnumerator UpdateSpawn()
     {
-        ChangeState(MonsterState.move);
+        if(anim.GetCurrentAnimatorStateInfo(0).IsName("Spawn"))
+        {
+            LookAtPlayer();
+            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+            ChangeState(MonsterState.move);
+        }
     }
 
     void UpdateMove()
     {
-        anim.Play("Walk");
         this.gameObject.GetComponent<Rigidbody>().mass = 1;
         transform.position += LookAtPlayer() * moveSpeed * Time.deltaTime;
 
@@ -112,32 +115,32 @@ public class DemoMonster : IMonster
 
     void UpdateAttack()
     {
-        anim.Play("Attack");
-
-        this.gameObject.GetComponent<Rigidbody>().mass = 1000f;
+        anim.SetBool("isAttack", true);
+        this.gameObject.GetComponent<Rigidbody>().mass = 10000f;
         LookAtPlayer();
 
         if (GetDistance(target.position, transform.position) > attackRange)
         {
+            anim.SetBool("isAttack", false);
             ChangeState(MonsterState.move);
         }
     }
 
-    void UpdateHit()
+    IEnumerator UpdateHit()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99)
-        {
-            anim.Play("Hit");
-            ChangeState(MonsterState.move);
-        }
+        anim.SetTrigger("isHit");
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        ReturnFromHit();
     }
 
-    void UpdateDead()
+    IEnumerator UpdateDead()
     {
         // 재화 및 경험치 얻는 처리?
+        anim.SetBool("isDead", true);
+        yield return new WaitForSeconds(0.1f);
 
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 5);
         this.gameObject.SetActive(false);
-        isDead = true;
     }
 
     void ChangeState(MonsterState state)
@@ -168,7 +171,8 @@ public class DemoMonster : IMonster
             if (other.gameObject.CompareTag("Skill"))
             {
                 Debug.Log("Hit");
-                IsDamaged(1);
+                ChangeState(MonsterState.hit);
+                IsDamaged(100);
             }
         }
     }
@@ -178,4 +182,23 @@ public class DemoMonster : IMonster
     {
         monsterHP -= ((int)damage - defense);
     }
+
+    void ReturnFromHit()
+    {
+        if (GetDistance(target.position, transform.position) < attackRange)
+        {
+            ChangeState(MonsterState.attack);
+        }
+        else
+        {
+            ChangeState(MonsterState.move);
+        }
+    }
+
+    void ResetMonster()
+    {
+        ChangeState(MonsterState.spawn);
+        monsterHP = 100;
+    }
+
 }
