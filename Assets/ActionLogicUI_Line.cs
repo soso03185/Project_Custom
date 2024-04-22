@@ -41,7 +41,7 @@ public class ActionLogicUI_Line : MonoBehaviour
 
         while (true)
         {
-            elapsedTime += Time.deltaTime / m_manager.convertingTime;
+            elapsedTime += Time.deltaTime / m_manager.m_convertingTime;
             m_transform.position = Vector3.Lerp(currentPosition, currentPosition - new Vector3(200, 0, 0), elapsedTime);
 
             if(elapsedTime >= 1)
@@ -51,6 +51,10 @@ public class ActionLogicUI_Line : MonoBehaviour
         }
 
         UISet();
+        if (m_actionIndex == m_manager.m_currentIndex - 1 || m_actionIndex == m_manager.m_currentIndex + 7)
+        {
+            m_transform.position = new Vector3(1500, 50, 0);
+        }
     }
 
     void UISet()

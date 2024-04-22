@@ -26,6 +26,7 @@ public class Move : Skill
     }
     public override IEnumerator Play(Player playerObject)
     {
+        yield return new WaitForSeconds(1f);
         GameObject target;
         m_animator = playerObject.GetComponent<Animator>();
         m_animator.SetBool(KeyIsMove, true);
@@ -62,6 +63,7 @@ public class Move : Skill
             yield return null;
         }
         m_animator.SetBool(KeyIsMove, false);
+        
         playerObject.SkillEnd();
     }
 }

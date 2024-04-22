@@ -11,23 +11,25 @@ public class Attack : Skill
 
     public override IEnumerator Play(Player playerObject)
     {
+        yield return new WaitForSeconds(1f);
         float elapsedTime = 0;
         m_animator = playerObject.GetComponent<Animator>();
         m_animator.SetBool(KeyIsAttack, true);
-
         while (!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
         {
             yield return null;
         }
 
-        while (m_animator.GetCurrentAnimatorStateInfo(0).length <= elapsedTime)
+        while (m_animator.GetCurrentAnimatorStateInfo(0).length >= elapsedTime)
         {
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         this.GetComponent<Collider>().enabled = true;
         this.transform.position = playerObject.transform.position;
-        yield return true;
+
+        yield return null;
 
         this.GetComponent<Collider>().enabled = false;
         m_animator.SetBool(KeyIsAttack, false);

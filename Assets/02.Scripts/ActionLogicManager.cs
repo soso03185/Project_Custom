@@ -6,13 +6,12 @@ public class ActionLogicManager : MonoBehaviour
 {
     public Skill[] m_actionLogic = new Skill[8];
     public ActionLogicUI_Line[] m_actionLogicUI = new ActionLogicUI_Line[8];
-    public float convertingTime;
+    public float m_convertingTime;
 
     public int m_currentIndex = 0;
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
