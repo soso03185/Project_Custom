@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using AssetKits.ParticleImage.Editor;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,17 +16,27 @@ public class DemoMonster : MonoBehaviour
     public float m_hp {  get; set; }
 
     [SerializeField]
-    float monsterHP;
-    public float MonsterHP
+    float m_monsterHp;
+    
+    //joohong
+    private GameObject m_canvas;
+
+    //joohong
+    [SerializeField]
+    private GameObject monsterHPBar;
+
+    private GameObject m_HpBar;
+
+    public float MMonsterHp
     {
         get 
         { 
-            return monsterHP;
+            return m_monsterHp;
         }
         set
         {
             if (monsterState != MonsterState.spawn)
-                monsterHP = value;
+                m_monsterHp = value;
         }
     }
 
@@ -41,13 +52,19 @@ public class DemoMonster : MonoBehaviour
 
     public MonsterManager manager;
 
-    void Start()
+    void Awake()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
         anim = GetComponent<Animator>();
 
         manager = GameObject.Find("MonsterManager").GetComponent<MonsterManager>();
         manager.AddMonster(this);
+
+        //joohong
+        m_canvas = GameObject.Find("Canvas");
+
+        m_HpBar = Instantiate(monsterHPBar, Vector3.zero, Quaternion.identity, m_canvas.transform);
+        m_HpBar.GetComponent<MonsterHpUI>().SetMonster(this.gameObject);
     }
 
     // 활성화 될 때마다 실행됨
@@ -86,7 +103,7 @@ public class DemoMonster : MonoBehaviour
 
     void UpdateBase()
     {
-        if (monsterHP == 0)
+        if (m_monsterHp == 0)
         {
             ChangeState(MonsterState.dead);
         }
@@ -141,6 +158,7 @@ public class DemoMonster : MonoBehaviour
 
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 5);
         this.gameObject.SetActive(false);
+        m_HpBar.SetActive(false);
     }
 
     void ChangeState(MonsterState state)
@@ -180,7 +198,7 @@ public class DemoMonster : MonoBehaviour
     // JaeHyeon
     void IsDamaged(float damage)
     {
-        monsterHP -= ((int)damage - defense);
+        m_monsterHp -= ((int)damage - defense);
     }
 
     void ReturnFromHit()
@@ -198,7 +216,10 @@ public class DemoMonster : MonoBehaviour
     void ResetMonster()
     {
         ChangeState(MonsterState.spawn);
-        monsterHP = 100;
+        m_monsterHp = 100;
+        
+        //joohong
+        m_HpBar.SetActive(true);
     }
 
 }
