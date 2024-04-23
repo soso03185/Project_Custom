@@ -5,26 +5,36 @@ using UnityEngine;
 public class Attack : Skill
 {
     private const string KeyIsAttack = "IsAttack01";
-    public GameObject player;
     public void Start()
     {
-        //playerObject = GameObject.FindGameObjectWithTag("Player");
     }
-       
+
     public override IEnumerator Play(Player playerObject)
     {
+        yield return new WaitForSeconds(1f);
+        float elapsedTime = 0;
         m_animator = playerObject.GetComponent<Animator>();
         m_animator.SetBool(KeyIsAttack, true);
-        if (m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
+        while (!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
         {
-            if (m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
-            {
-                this.transform.position = playerObject.transform.position;
-                m_animator.SetBool(KeyIsAttack, false);
-                yield return true;
-            }
+            yield return null;
         }
+
+        while (m_animator.GetCurrentAnimatorStateInfo(0).length >= elapsedTime)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        this.GetComponent<Collider>().enabled = true;
+        this.transform.position = playerObject.transform.position;
+
         yield return null;
+
+        this.GetComponent<Collider>().enabled = false;
+        m_animator.SetBool(KeyIsAttack, false);
+
+        playerObject.SkillEnd();
     }
 
     private void OnTriggerEnter(Collider collider)

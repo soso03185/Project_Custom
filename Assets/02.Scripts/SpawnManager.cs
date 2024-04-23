@@ -19,8 +19,8 @@ public class SpawnSystem : MonoBehaviour
     void Start()
     {
         // 최소치 몬스터 생성
-        StartCoroutine(this.CreateMonsterGroup());
-        //StartCoroutine(this.CreateMonster());
+        //StartCoroutine(this.CreateMonsterGroup()); 
+        StartCoroutine(this.CreateMonster());
 
     }
 
