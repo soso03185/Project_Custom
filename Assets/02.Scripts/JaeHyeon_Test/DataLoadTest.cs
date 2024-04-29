@@ -14,11 +14,41 @@ public class DataLoadTest : MonoBehaviour
 
     void Start()
     {
-        foreach (var value in DefaultTable.Data.DataList)
+        
+    }
+
+    public void LocalLoad()
+    {
+        Debug.Log("LocalLoad");
+
+        foreach (var value in ProjectCustom_UserData.UserData.UserDataList)
         {
-            Debug.Log(value.index + "," + value.intValue + "," + value.strValue);
+            Debug.Log(value.Name + "," + value.Level + "," + value.Hp);
         }
-        var dataFromMap = DefaultTable.Data.DataMap[0];
-        Debug.Log("dataFromMap : " + dataFromMap.index + ", " + dataFromMap.intValue + "," + dataFromMap.strValue);
+        var dataFromMap = ProjectCustom_UserData.UserData.UserDataMap[0];
+        Debug.Log("dataFromMap : " + dataFromMap.Name + ", " + dataFromMap.Level + "," + dataFromMap.Hp);
+    }
+
+    public void LiveLoad()
+    {
+        Debug.Log("LiveLoad");
+
+        UnityGoogleSheet.LoadFromGoogle<int, ProjectCustom_UserData.UserData> ((list, map) => {
+            list.ForEach(x => {
+                Debug.Log(x.Hp);
+            });
+        }, true);
+    }
+
+    public void LiveWrite()
+    {
+        Debug.Log("LiveWrite");
+
+        var newData = new ProjectCustom_UserData.UserData();
+        newData.Name = "MyPlayer";
+        newData.Level = 300;
+        newData.Hp = 33;
+
+        UnityGoogleSheet.Write<ProjectCustom_UserData.UserData>(newData);
     }
 }
