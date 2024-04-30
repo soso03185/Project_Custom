@@ -1,54 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+public class ObjectPool
 {
     // 싱글톤
-    public static ObjectPool Instance;
+    //public static ObjectPool Instance;
 
-    [SerializeField]
     private GameObject poolingObjectPrefab;
 
-    public List<GameObject> objectsList;
+    public List<GameObject> objectsList = new List<GameObject>();
 
     public int poolSize = 200;
 
-    private void Awake()
+    public Transform parentTransform;
+
+    public void CreateObject(string path, int size)
     {
-        Instance = this;
-        objectsList = new List<GameObject>();
-
-        for (int i = 0; i < poolSize; i++)
+        for (int i = 0; i < size; i++)
         {
-            GameObject obj = Instantiate(poolingObjectPrefab);
+            //GameObject obj = Instantiate(poolingObjectPrefab, parentTransform);
+            poolingObjectPrefab = Managers.Resoruce.Instantiate(path, parentTransform);
 
-            obj.SetActive(false);
-            objectsList.Add(obj);
+            poolingObjectPrefab.SetActive(false);
+            objectsList.Add(poolingObjectPrefab);
         }
     }
 
     // 오버로딩
-    public GameObject GetGameObject(Vector3 trans)
+    public GameObject GetGameObject(string path, Vector3 trans)
     {
         GameObject select = null;
-        
         foreach(GameObject obj in objectsList) 
         {
             if(!obj.activeSelf)
             {
                 select = obj;
-                select.transform.position = trans;
-                select.SetActive(true);
-                break;
+                if(select.name == path + "(Clone)")
+                {
+                    select.transform.position = trans;
+                    select.SetActive(true);
+                    break;
+                }
             }
 
         }
 
         if (!select)
         {
-            select = Instantiate(poolingObjectPrefab);
+            select = Managers.Resoruce.Instantiate(path, parentTransform); ;
             select.transform.position = trans;
             objectsList.Add(select);
         }
@@ -56,7 +58,7 @@ public class ObjectPool : MonoBehaviour
         return select;
     }
 
-    public GameObject GetGameObject()
+    public GameObject GetGameObject(string path)
     {
         GameObject select = null;
 
@@ -72,12 +74,16 @@ public class ObjectPool : MonoBehaviour
 
         if (!select)
         {
-            select = Instantiate(poolingObjectPrefab);
+            select = Managers.Resoruce.Instantiate(path, parentTransform); ;
             objectsList.Add(select);
         }
 
         return select;
     }
 
-    // return함수 
+    // return함수
+    public void ReturnObject(GameObject obj)
+    {
+        obj.SetActive(false);
+    }
 }
