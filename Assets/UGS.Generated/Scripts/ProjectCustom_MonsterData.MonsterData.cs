@@ -14,42 +14,42 @@ using System.Reflection;
 using UnityEngine;
 
 
-namespace ProjectCustom_UserData
+namespace ProjectCustom_MonsterData
 {
     [GoogleSheet.Attribute.TableStruct]
-    public partial class UserData : ITable
+    public partial class MonsterData : ITable
     { 
 
-        public delegate void OnLoadedFromGoogleSheets(List<UserData> loadedList, Dictionary<int, UserData> loadedDictionary);
+        public delegate void OnLoadedFromGoogleSheets(List<MonsterData> loadedList, Dictionary<int, MonsterData> loadedDictionary);
 
         static bool isLoaded = false;
-        static string spreadSheetID = "10T-CWS5bZ463Hqe2IlJdefnRIT4aqanrtPrk_EP1cDM"; // it is file id
+        static string spreadSheetID = "16sLbF9ZLlTfODe-jtoVaOQUd_wohSXUad_0G2s1wjJU"; // it is file id
         static string sheetID = "0"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
     
-        public static Dictionary<int, UserData> UserDataMap = new Dictionary<int, UserData>();  
-        public static List<UserData> UserDataList = new List<UserData>();   
+        public static Dictionary<int, MonsterData> MonsterDataMap = new Dictionary<int, MonsterData>();  
+        public static List<MonsterData> MonsterDataList = new List<MonsterData>();   
 
         /// <summary>
-        /// Get UserData List 
+        /// Get MonsterData List 
         /// Auto Load
         /// </summary>
-        public static List<UserData> GetList()
+        public static List<MonsterData> GetList()
         {{
            if (isLoaded == false) Load();
-           return UserDataList;
+           return MonsterDataList;
         }}
 
         /// <summary>
-        /// Get UserData Dictionary, keyType is your sheet A1 field type.
+        /// Get MonsterData Dictionary, keyType is your sheet A1 field type.
         /// - Auto Load
         /// </summary>
-        public static Dictionary<int, UserData>  GetDictionary()
+        public static Dictionary<int, MonsterData>  GetDictionary()
         {{
            if (isLoaded == false) Load();
-           return UserDataMap;
+           return MonsterDataMap;
         }}
 
     
@@ -57,7 +57,7 @@ namespace ProjectCustom_UserData
 /* Fields. */
 
 		public System.Int32 Key;
-		public System.Int32 UserID;
+		public System.Int32 MonsterID;
 		public System.String Name;
 		public System.Int32 Level;
 		public System.Single Hp;
@@ -66,16 +66,10 @@ namespace ProjectCustom_UserData
 		public System.Single MoveSpeed;
 		public System.Single AttackSpeed;
 		public System.Single AttackRange;
-		public System.Single LogicChangeSpeed;
 		public System.Int32 NowExp;
-		public System.Single CriticalChance;
-		public System.Single CriticalMultiplier;
-		public System.Int32 Equipment;
 		public System.Int32 Gold;
 		public System.Int32 Goods;
 		public System.Int32 Goods2;
-		public System.Int32 Goods3;
-		public System.Int32 Costume;
   
 
 #region fuctions
@@ -86,12 +80,12 @@ namespace ProjectCustom_UserData
             if(isLoaded && forceReload == false)
             {
 #if UGS_DEBUG
-                 Debug.Log("UserData is already loaded! if you want reload then, forceReload parameter set true");
+                 Debug.Log("MonsterData is already loaded! if you want reload then, forceReload parameter set true");
 #endif
                  return;
             }
 
-            string text = reader.ReadData("ProjectCustom_UserData"); 
+            string text = reader.ReadData("ProjectCustom_MonsterData"); 
             if (text != null)
             {
                 var result = Newtonsoft.Json.JsonConvert.DeserializeObject<ReadSpreadSheetResult>(text);
@@ -102,7 +96,7 @@ namespace ProjectCustom_UserData
         }
  
 
-        public static void LoadFromGoogle(System.Action<List<UserData>, Dictionary<int, UserData>> onLoaded, bool updateCurrentData = false)
+        public static void LoadFromGoogle(System.Action<List<MonsterData>, Dictionary<int, MonsterData>> onLoaded, bool updateCurrentData = false)
         {      
                 IHttpProtcol webInstance = null;
     #if UNITY_EDITOR
@@ -130,14 +124,14 @@ namespace ProjectCustom_UserData
                
 
 
-    public static (List<UserData> list, Dictionary<int, UserData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
-            Dictionary<int, UserData> Map = new Dictionary<int, UserData>();
-            List<UserData> List = new List<UserData>();     
+    public static (List<MonsterData> list, Dictionary<int, MonsterData> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
+            Dictionary<int, MonsterData> Map = new Dictionary<int, MonsterData>();
+            List<MonsterData> List = new List<MonsterData>();     
             TypeMap.Init();
-            FieldInfo[] fields = typeof(UserData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(MonsterData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["UserData"];
+            var sheet = jsonObject["MonsterData"];
 
             foreach (var column in sheet.Keys)
             {
@@ -156,7 +150,7 @@ namespace ProjectCustom_UserData
                         int rowCount = rows[0].Count;
                         for (int i = 0; i < rowCount; i++)
                         {
-                            UserData instance = new UserData();
+                            MonsterData instance = new MonsterData();
                             for (int j = 0; j < typeInfos.Count; j++)
                             {
                                 try
@@ -197,8 +191,8 @@ namespace ProjectCustom_UserData
                         }
                         if(isLoaded == false || forceReload)
                         { 
-                            UserDataList = List;
-                            UserDataMap = Map;
+                            MonsterDataList = List;
+                            MonsterDataMap = Map;
                             isLoaded = true;
                         }
                     } 
@@ -208,10 +202,10 @@ namespace ProjectCustom_UserData
 
  
 
-        public static void Write(UserData data, System.Action<WriteObjectResult> onWriteCallback = null)
+        public static void Write(MonsterData data, System.Action<WriteObjectResult> onWriteCallback = null)
         { 
             TypeMap.Init();
-            FieldInfo[] fields = typeof(UserData).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(MonsterData).GetFields(BindingFlags.Public | BindingFlags.Instance);
             var datas = new string[fields.Length];
             for (int i = 0; i < fields.Length; i++)
             {
