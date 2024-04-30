@@ -12,4 +12,13 @@ public class Define
         hit,
         dead
     };
+
+    public enum SpawnType
+    {
+        Noraml,
+        Delay,
+        Group
+    }
+
 }
+

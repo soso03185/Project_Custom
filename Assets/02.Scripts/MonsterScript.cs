@@ -15,7 +15,7 @@ public class DemoMonster : MonoBehaviour
     public float m_hp {  get; set; }
 
     [SerializeField]
-    float monsterHP;
+    private float monsterHP;
     public float MonsterHP
     {
         get 
@@ -60,6 +60,7 @@ public class DemoMonster : MonoBehaviour
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        //GetComponent<Rigidbody>(). = Vector3.zero;
 
         switch (monsterState)
         {
@@ -106,7 +107,6 @@ public class DemoMonster : MonoBehaviour
     {
         this.gameObject.GetComponent<Rigidbody>().mass = 1;
         transform.position += LookAtPlayer() * moveSpeed * Time.deltaTime;
-
         if (GetDistance(target.position, transform.position) < attackRange)
         {
             ChangeState(MonsterState.attack);
@@ -128,7 +128,7 @@ public class DemoMonster : MonoBehaviour
 
     IEnumerator UpdateHit()
     {
-        anim.SetTrigger("isHit");
+        anim.SetBool("isHit", true);
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         ReturnFromHit();
     }
@@ -140,7 +140,9 @@ public class DemoMonster : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 5);
-        this.gameObject.SetActive(false);
+
+        // 오브젝트 풀 통해서 관리하기
+        //ObjectPool.Instance.ReturnObject(this.gameObject);
     }
 
     void ChangeState(MonsterState state)
@@ -185,6 +187,7 @@ public class DemoMonster : MonoBehaviour
 
     void ReturnFromHit()
     {
+        anim.SetBool("isHit", false);
         if (GetDistance(target.position, transform.position) < attackRange)
         {
             ChangeState(MonsterState.attack);
@@ -198,7 +201,7 @@ public class DemoMonster : MonoBehaviour
     void ResetMonster()
     {
         ChangeState(MonsterState.spawn);
-        monsterHP = 100;
+        //monsterHP = 100;
     }
 
 }
