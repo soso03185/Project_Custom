@@ -10,17 +10,17 @@ public class ActionLogicManager : MonoBehaviour
 
     public int m_currentIndex = 0;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        foreach (var skill in m_actionLogic)
+        {
+            Instantiate(skill);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            NextAction();
-        }
     }
 
     Skill GetCurrentSkill()

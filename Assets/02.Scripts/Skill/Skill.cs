@@ -7,6 +7,7 @@ public abstract class Skill : MonoBehaviour
 {
     public Sprite image;
     protected Animator m_animator;
+    
     public abstract IEnumerator Play(Player playerObject);
 
 }
