@@ -3,44 +3,62 @@ using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using System.Threading;
 using UnityEngine;
+using static Define;
 
-public class SpawnSystem : MonoBehaviour
+public class SpawnManager : MonoBehaviour
 {
-    public Transform Player;
-    public GameObject monsterPrefab;
+    public Transform target;
     public float spawnRadius = 10f;
     public int maxMonster;
     public int minMonster;
-    public bool isGameOver = false;
+    private bool isGameOver = false;
     public int monsterCount;
     private List<Vector3> monsterSpawnPos = new List<Vector3>();
+
+
+    [System.Serializable]
+    public struct SpawnOptions
+    {
+        public SpawnType spawnType;
+        public string monsterName;
+        public int maxMonsterCount;
+    }
+
+    public List<SpawnOptions> spawnList = new List<SpawnOptions>();
 
     // Start is called before the first frame update
     void Start()
     {
-        // 최소치 몬스터 생성
-        //StartCoroutine(this.CreateMonsterGroup()); 
-        StartCoroutine(this.CreateMonster());
 
+        int monsterListSize = spawnList.Count;
+
+        for (int i = 0; i < monsterListSize; i++)
+        {
+            switch (spawnList[i].spawnType)
+            {
+                case SpawnType.Noraml:
+                    StartCoroutine(this.CreateMonster(spawnList[i].maxMonsterCount, spawnList[i].monsterName));
+                    break;
+                case SpawnType.Delay:
+                    StartCoroutine(this.CreateMonsterDelay(spawnList[i].maxMonsterCount, spawnList[i].monsterName));
+                    break;
+                case SpawnType.Group:
+                    StartCoroutine(this.CreateMonsterGroup(spawnList[i].maxMonsterCount, spawnList[i].monsterName));
+                    break;
+            }
+        }
     }
-
-    IEnumerator CreateMonster()
+    IEnumerator CreateMonster(int maxmonsterCount, string _monsterName)
     {
-        while (!isGameOver)
+        while(!isGameOver)
         {
             monsterCount = (int)GameObject.FindGameObjectsWithTag("Monster").Length;
 
-            if (monsterCount < minMonster)
+            if(monsterCount < maxmonsterCount)
             {
                 yield return new WaitForSeconds(0.2f);
 
-                SpawnMonster();
-            }
-            else if(monsterCount < maxMonster)
-            {
-                yield return new WaitForSeconds(Random.Range(0.1f, 3.0f));
-
-                SpawnMonster();
+                SpawnMonster(_monsterName);
             }
             else
             {
@@ -49,12 +67,39 @@ public class SpawnSystem : MonoBehaviour
         }
     }
 
-    IEnumerator CreateMonsterGroup()
+    IEnumerator CreateMonsterDelay(int monsterCount, string _monsterName)
+    {
+        while (!isGameOver)
+        {
+            //monsterCount = (int)GameObject.FindGameObjectsWithTag("Monster").Length;
+
+            //// 최소값보다 적을때는 0.2초마다 생성
+            //if (monsterCount < minMonster)
+            //{
+            //    yield return new WaitForSeconds(0.2f);
+
+            //    SpawnMonster();
+            //}
+            // 그 후로 최대 몬스터 마리 수가 될 때까지는 Delay주면서 생성
+            if (monsterCount < maxMonster)
+            {
+                yield return new WaitForSeconds(Random.Range(0.1f, 3.0f));
+
+                SpawnMonster(_monsterName);
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+    }
+
+    IEnumerator CreateMonsterGroup(int maxmonsterCount, string _monsterName)
     {
         while (!isGameOver)
         {
             monsterCount = GameObject.FindGameObjectsWithTag("Monster").Length;
-            if (monsterCount >= maxMonster)
+            if (monsterCount >= maxmonsterCount)
             {
                 yield return null;
                 continue;
@@ -70,7 +115,8 @@ public class SpawnSystem : MonoBehaviour
 
                 Vector3 spawnPosition = groupCenter + spawnPositionOffset;
 
-                ObjectPool.Instance.GetGameObject(spawnPosition);
+                //ObjectPool.Instance.GetGameObject(spawnPosition, _monsterName);
+
                 monsterSpawnPos.Add(spawnPosition);
             }
 
@@ -87,11 +133,11 @@ public class SpawnSystem : MonoBehaviour
         return new Vector3(x, 0f, z);
     }
 
-    void SpawnMonster()
+    void SpawnMonster(string _monsterName)
     {
         Vector3 spawnPosition = GetRandomPositionAroundPlayer();
 
-        ObjectPool.Instance.GetGameObject(spawnPosition);
+        //ObjectPool.Instance.GetGameObject(spawnPosition, _monsterName);
         monsterSpawnPos.Add(spawnPosition);
     }
 
@@ -101,17 +147,9 @@ public class SpawnSystem : MonoBehaviour
 
         Vector3 randomDirection3D = new Vector3(randomDirection2D.x, 0f, randomDirection2D.y);
 
-        Vector3 randomPosition = Player.position + randomDirection3D;
+        Vector3 randomPosition = target.position + randomDirection3D;
 
         return randomPosition;
     }
 
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-
-        }
-            
-    }
 }
