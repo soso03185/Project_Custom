@@ -13,12 +13,20 @@ public class Define
         dead
     };
 
+    public enum MonsterName
+    {
+        Fox,
+        Skeleton
+    }
+
     public enum SpawnType
     {
         Noraml,
         Delay,
         Group
     }
+
+
 
 }
 
