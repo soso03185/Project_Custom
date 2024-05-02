@@ -5,7 +5,7 @@ using System.Threading;
 using UnityEngine;
 using static Define;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnSystem : MonoBehaviour
 {
     public Transform target;
     public float spawnRadius = 10f;
@@ -15,22 +15,23 @@ public class SpawnManager : MonoBehaviour
     public int totalMonsterCount;
     private List<Vector3> monsterSpawnPos = new List<Vector3>();
 
+    public List<SpawnOptions> spawnList = new List<SpawnOptions>();
 
     [System.Serializable]
     public struct SpawnOptions
     {
         public SpawnType spawnType;
-        public string monsterName;
+        public MonsterName monsterName;
         public int maxMonsterCount;
         public bool isSpawn;
     }
 
-    public List<SpawnOptions> spawnList = new List<SpawnOptions>();
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
+        StartSpawning();
+    }
+    public void StartSpawning()
+    {
         int monsterListSize = spawnList.Count;
 
         for (int i = 0; i < monsterListSize; i++)
@@ -40,20 +41,20 @@ public class SpawnManager : MonoBehaviour
                 switch (spawnList[i].spawnType)
                 {
                     case SpawnType.Noraml:
-                        StartCoroutine(this.CreateMonster(spawnList[i].maxMonsterCount, spawnList[i].monsterName));
+                        CoroutineHandler.instance.StartMyCoroutine(this.NormalSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
                         break;
                     case SpawnType.Delay:
-                        StartCoroutine(this.CreateMonsterDelay(spawnList[i].maxMonsterCount, spawnList[i].monsterName));
+                        CoroutineHandler.instance.StartMyCoroutine(this.DelaySpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
                         break;
                     case SpawnType.Group:
-                        StartCoroutine(this.CreateMonsterGroup(spawnList[i].maxMonsterCount, spawnList[i].monsterName));
+                        CoroutineHandler.instance.StartMyCoroutine(this.GroupSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
                         break;
                 }
             }
         }
     }
 
-    IEnumerator CreateMonster(int maxmonsterCount, string _monsterName)
+    IEnumerator NormalSpawn(int maxmonsterCount, string _monsterName)
     {
         while(!isGameOver)
         {
@@ -62,7 +63,6 @@ public class SpawnManager : MonoBehaviour
             if(monsterCount < maxmonsterCount)
             {
                 yield return new WaitForSeconds(0.2f);
-                totalMonsterCount++;
                 SpawnMonster(_monsterName);
             }
             else
@@ -72,7 +72,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator CreateMonsterDelay(int maxMonsterCount, string _monsterName)
+    IEnumerator DelaySpawn(int maxMonsterCount, string _monsterName)
     {
         while (!isGameOver)
         {
@@ -81,7 +81,6 @@ public class SpawnManager : MonoBehaviour
             if (monsterCount < maxMonsterCount)
             {
                 yield return new WaitForSeconds(Random.Range(0.1f, 3.0f));
-                totalMonsterCount++;
                 SpawnMonster(_monsterName);
             }
             else
@@ -91,7 +90,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator CreateMonsterGroup(int maxmonsterCount, string _monsterName)
+    IEnumerator GroupSpawn(int maxmonsterCount, string _monsterName)
     {
         while (!isGameOver)
         {
@@ -112,7 +111,6 @@ public class SpawnManager : MonoBehaviour
 
                 Vector3 spawnPosition = groupCenter + spawnPositionOffset;
 
-                //ObjectPool.Instance.GetGameObject(spawnPosition, _monsterName);
                 totalMonsterCount++;
                 Managers.Pool.GetPool(_monsterName).GetGameObject(_monsterName, spawnPosition);
                 monsterSpawnPos.Add(spawnPosition);
@@ -133,9 +131,9 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnMonster(string _monsterName)
     {
+        totalMonsterCount++;
+        
         Vector3 spawnPosition = GetRandomPositionAroundPlayer();
-
-        //ObjectPool.Instance.GetGameObject(spawnPosition, _monsterName);
 
         Managers.Pool.GetPool(_monsterName).GetGameObject(_monsterName, spawnPosition);
         monsterSpawnPos.Add(spawnPosition);
@@ -151,5 +149,7 @@ public class SpawnManager : MonoBehaviour
 
         return randomPosition;
     }
+
+
 
 }
