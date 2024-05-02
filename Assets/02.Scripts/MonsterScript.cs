@@ -12,6 +12,7 @@ public class DemoMonster : MonoBehaviour
     [SerializeField]
     public MonsterState monsterState = MonsterState.spawn;
 
+    public float m_monsterHp;
     
     //joohong
     private GameObject m_canvas;
@@ -22,8 +23,6 @@ public class DemoMonster : MonoBehaviour
 
     private GameObject m_HpBar;
 
-    [SerializeField]
-    float m_monsterHp;
 
     public float MonsterHP
     {
@@ -55,7 +54,7 @@ public class DemoMonster : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
         anim = GetComponent<Animator>();
 
-        manager = GameObject.Find("MonsterManager").GetComponent<MonsterManager>();
+        manager = Managers.Monsters;
         manager.AddMonster(this);
 
         //joohong
