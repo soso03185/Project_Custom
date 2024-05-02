@@ -22,7 +22,7 @@ public class MonsterHpUI : MonoBehaviour
                 Camera.main.WorldToScreenPoint(m_monster.transform.position) + new Vector3(0, 100, 0);
         }
 
-        GetComponent<Slider>().value = m_monster.GetComponent<DemoMonster>().MMonsterHp / 100f;
+        GetComponent<Slider>().value = m_monster.GetComponent<DemoMonster>().MonsterHP / 100f;
     }
 
     public void SetMonster(GameObject monster)

@@ -6,7 +6,6 @@ public class PoolManager
 {
     public Dictionary<string, ObjectPool> pools = new Dictionary<string, ObjectPool>();
 
-
     public void CreatePool(string path, int size)
     {
         ObjectPool pool = new ObjectPool();

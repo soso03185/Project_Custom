@@ -17,6 +17,8 @@ public class ObjectPool
 
     public Transform parentTransform;
 
+    public int activeCount;
+
     public void CreateObject(string path, int size)
     {
         for (int i = 0; i < size; i++)
@@ -42,6 +44,7 @@ public class ObjectPool
                 {
                     select.transform.position = trans;
                     select.SetActive(true);
+                    activeCount++;
                     break;
                 }
             }
@@ -53,6 +56,7 @@ public class ObjectPool
             select = Managers.Resoruce.Instantiate(path, parentTransform); ;
             select.transform.position = trans;
             objectsList.Add(select);
+            activeCount++;
         }
 
         return select;
@@ -68,6 +72,7 @@ public class ObjectPool
             {
                 select = obj;
                 select.SetActive(true);
+                activeCount++;
                 break;
             }
         }
@@ -76,6 +81,7 @@ public class ObjectPool
         {
             select = Managers.Resoruce.Instantiate(path, parentTransform); ;
             objectsList.Add(select);
+            activeCount++;
         }
 
         return select;
@@ -85,5 +91,6 @@ public class ObjectPool
     public void ReturnObject(GameObject obj)
     {
         obj.SetActive(false);
+        activeCount--;
     }
 }

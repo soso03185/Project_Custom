@@ -12,12 +12,6 @@ public class DemoMonster : MonoBehaviour
     [SerializeField]
     public MonsterState monsterState = MonsterState.spawn;
 
-    [SerializeField]
-    public float m_hp {  get; set; }
-
-    [SerializeField]
-
-    float m_monsterHp;
     
     //joohong
     private GameObject m_canvas;
@@ -27,6 +21,9 @@ public class DemoMonster : MonoBehaviour
     private GameObject monsterHPBar;
 
     private GameObject m_HpBar;
+
+    [SerializeField]
+    float m_monsterHp;
 
     public float MonsterHP
     {
@@ -78,7 +75,6 @@ public class DemoMonster : MonoBehaviour
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        //GetComponent<Rigidbody>(). = Vector3.zero;
 
         switch (monsterState)
         {
@@ -90,8 +86,8 @@ public class DemoMonster : MonoBehaviour
                 UpdateMove();
                 break;
             case MonsterState.attack:
-                UpdateAttack();
                 UpdateBase();
+                UpdateAttack();
                 break;
             case MonsterState.hit:
                 StartCoroutine(UpdateHit());
@@ -133,9 +129,9 @@ public class DemoMonster : MonoBehaviour
 
     void UpdateAttack()
     {
+        LookAtPlayer();
         anim.SetBool("isAttack", true);
         this.gameObject.GetComponent<Rigidbody>().mass = 10000f;
-        LookAtPlayer();
 
         if (GetDistance(target.position, transform.position) > attackRange)
         {
@@ -159,12 +155,11 @@ public class DemoMonster : MonoBehaviour
 
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 5);
 
-        this.gameObject.SetActive(false);
-        m_HpBar.SetActive(false);
-
+        //this.gameObject.SetActive(false);
 
         // 오브젝트 풀 통해서 관리하기
-        //ObjectPool.Instance.ReturnObject(this.gameObject);
+        Managers.Pool.GetPool(this.gameObject.name).ReturnObject(this.gameObject);
+        m_HpBar.SetActive(false);
     }
 
     void ChangeState(MonsterState state)
