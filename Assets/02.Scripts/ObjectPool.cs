@@ -21,6 +21,10 @@ public class ObjectPool
 
     public void CreateObject(string path, int size)
     {
+        GameObject parentObj = new GameObject();
+        parentObj.name = path + " List";
+        parentTransform = parentObj.transform;
+
         for (int i = 0; i < size; i++)
         {
             //GameObject obj = Instantiate(poolingObjectPrefab, parentTransform);
