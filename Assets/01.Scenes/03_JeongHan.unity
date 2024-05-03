@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 573357771}
   - component: {fileID: 573357770}
   m_Layer: 0
-  m_Name: SpawnSystem
+  m_Name: SpawnController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,19 +153,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4368944211882816910}
-  spawnRadius: 10
-  maxMonster: 0
-  minMonster: 0
   totalMonsterCount: 0
+  spawnRadius: 10
   spawnList:
-  - spawnType: 2
+  - isSpawn: 1
+    spawnType: 1
     monsterName: 0
     maxMonsterCount: 50
-    isSpawn: 1
-  - spawnType: 0
+  - isSpawn: 1
+    spawnType: 0
     monsterName: 1
     maxMonsterCount: 20
-    isSpawn: 1
 --- !u!4 &573357771
 Transform:
   m_ObjectHideFlags: 0
@@ -181,7 +179,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1096648861
+--- !u!1 &1912721963
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,34 +187,36 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1096648863}
-  - component: {fileID: 1096648862}
+  - component: {fileID: 1912721965}
+  - component: {fileID: 1912721964}
   m_Layer: 0
-  m_Name: CoroutineHandler
+  m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1096648862
+--- !u!114 &1912721964
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1096648861}
+  m_GameObject: {fileID: 1912721963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f6dffeb74417a34993b7a895fbf0d21, type: 3}
+  m_Script: {fileID: 11500000, guid: c14faec2c334af94a87d33bc70e9b038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1096648863
+  hp: 0
+  mp: 0
+--- !u!4 &1912721965
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1096648861}
+  m_GameObject: {fileID: 1912721963}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.6575494, y: -8.317925, z: -1.2104816}
@@ -979,6 +979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a43662316e5a4642b8641537933b8d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Skill: {fileID: 0}
   m_actionIndex: 2
   m_manager: {fileID: 4238451469195147762}
 --- !u!224 &1384773866029828413
@@ -1131,6 +1132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a43662316e5a4642b8641537933b8d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Skill: {fileID: 0}
   m_actionIndex: 3
   m_manager: {fileID: 4238451469195147762}
 --- !u!1 &1626365558761354034
@@ -2102,6 +2104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a43662316e5a4642b8641537933b8d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Skill: {fileID: 0}
   m_actionIndex: 4
   m_manager: {fileID: 4238451469195147762}
 --- !u!4 &2966752228684529174
@@ -2569,6 +2572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a43662316e5a4642b8641537933b8d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Skill: {fileID: 0}
   m_actionIndex: 6
   m_manager: {fileID: 4238451469195147762}
 --- !u!135 &3861255822850585741
@@ -2620,6 +2624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a43662316e5a4642b8641537933b8d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Skill: {fileID: 0}
   m_actionIndex: 7
   m_manager: {fileID: 4238451469195147762}
 --- !u!114 &3959307236854989190
@@ -2797,6 +2802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a43662316e5a4642b8641537933b8d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Skill: {fileID: 0}
   m_actionIndex: 1
   m_manager: {fileID: 4238451469195147762}
 --- !u!114 &4349689474282752595
@@ -4474,6 +4480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a43662316e5a4642b8641537933b8d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Skill: {fileID: 0}
   m_actionIndex: 0
   m_manager: {fileID: 4238451469195147762}
 --- !u!114 &6462978437529013109
@@ -5779,6 +5786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a43662316e5a4642b8641537933b8d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Skill: {fileID: 0}
   m_actionIndex: 5
   m_manager: {fileID: 4238451469195147762}
 --- !u!114 &9212029125565140289
@@ -5816,6 +5824,7 @@ SceneRoots:
   - {fileID: 6795476483069692199}
   - {fileID: 7647007657911548537}
   - {fileID: 5602023621878125960}
+  - {fileID: 573357771}
   - {fileID: 2257306146952554359}
   - {fileID: 7433474082608098234}
   - {fileID: 2808180401730020877}
@@ -5829,5 +5838,4 @@ SceneRoots:
   - {fileID: 4368944211882816910}
   - {fileID: 2701383050093065235}
   - {fileID: 192699120775719227}
-  - {fileID: 573357771}
-  - {fileID: 1096648863}
+  - {fileID: 1912721965}

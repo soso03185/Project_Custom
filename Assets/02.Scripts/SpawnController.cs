@@ -5,31 +5,32 @@ using System.Threading;
 using UnityEngine;
 using static Define;
 
-public class SpawnSystem : MonoBehaviour
+public class SpawnController : MonoBehaviour
 {
     public Transform target;
-    public float spawnRadius = 10f;
-    public int maxMonster;
-    public int minMonster;
+
     private bool isGameOver = false;
     public int totalMonsterCount;
+
     private List<Vector3> monsterSpawnPos = new List<Vector3>();
+    public float spawnRadius = 10f;
 
     public List<SpawnOptions> spawnList = new List<SpawnOptions>();
 
     [System.Serializable]
     public struct SpawnOptions
     {
+        public bool isSpawn;
         public SpawnType spawnType;
         public MonsterName monsterName;
         public int maxMonsterCount;
-        public bool isSpawn;
     }
 
     private void Start()
     {
         StartSpawning();
     }
+
     public void StartSpawning()
     {
         int monsterListSize = spawnList.Count;
@@ -41,13 +42,13 @@ public class SpawnSystem : MonoBehaviour
                 switch (spawnList[i].spawnType)
                 {
                     case SpawnType.Noraml:
-                        CoroutineHandler.instance.StartMyCoroutine(this.NormalSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
+                        StartCoroutine(this.NormalSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
                         break;
                     case SpawnType.Delay:
-                        CoroutineHandler.instance.StartMyCoroutine(this.DelaySpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
+                        StartCoroutine(this.DelaySpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
                         break;
                     case SpawnType.Group:
-                        CoroutineHandler.instance.StartMyCoroutine(this.GroupSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
+                        StartCoroutine(this.GroupSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
                         break;
                 }
             }
@@ -149,7 +150,5 @@ public class SpawnSystem : MonoBehaviour
 
         return randomPosition;
     }
-
-
 
 }
