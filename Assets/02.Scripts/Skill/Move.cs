@@ -16,13 +16,11 @@ public class Move : Skill
     public float attackRange;
     private float _targetDistance = 0;
 
-
     private const string KeyIsMove = "IsRun";
 
     void Start()
     {
-        
-        
+
     }
     public override IEnumerator Play(Player playerObject)
     {

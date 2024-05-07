@@ -25,7 +25,13 @@ public class Player : MonoBehaviour
     public void SkillEnd()
     {
         m_logicManager.NextAction();
-
-        ActivateSkill(m_logicManager.m_actionLogic[m_logicManager.m_currentIndex]);
+        if (m_logicManager.m_actionLogic[m_logicManager.m_currentIndex])
+        {
+            ActivateSkill(m_logicManager.m_actionLogic[m_logicManager.m_currentIndex]);
+        }
+        else
+        {
+            SkillEnd();
+        }
     }
 }

@@ -12,11 +12,6 @@ public class DemoMonster : MonoBehaviour
     [SerializeField]
     public MonsterState monsterState = MonsterState.spawn;
 
-    [SerializeField]
-    public float m_hp {  get; set; }
-
-    [SerializeField]
-    float m_monsterHp;
     
     //joohong
     private GameObject m_canvas;
@@ -27,7 +22,10 @@ public class DemoMonster : MonoBehaviour
 
     private GameObject m_HpBar;
 
-    public float MMonsterHp
+    [SerializeField]
+    float m_monsterHp;
+
+    public float MonsterHP
     {
         get 
         { 
@@ -88,8 +86,8 @@ public class DemoMonster : MonoBehaviour
                 UpdateMove();
                 break;
             case MonsterState.attack:
-                UpdateAttack();
                 UpdateBase();
+                UpdateAttack();
                 break;
             case MonsterState.hit:
                 StartCoroutine(UpdateHit());
@@ -123,7 +121,6 @@ public class DemoMonster : MonoBehaviour
     {
         this.gameObject.GetComponent<Rigidbody>().mass = 1;
         transform.position += LookAtPlayer() * moveSpeed * Time.deltaTime;
-
         if (GetDistance(target.position, transform.position) < attackRange)
         {
             ChangeState(MonsterState.attack);
@@ -132,9 +129,9 @@ public class DemoMonster : MonoBehaviour
 
     void UpdateAttack()
     {
+        LookAtPlayer();
         anim.SetBool("isAttack", true);
         this.gameObject.GetComponent<Rigidbody>().mass = 10000f;
-        LookAtPlayer();
 
         if (GetDistance(target.position, transform.position) > attackRange)
         {
@@ -145,7 +142,7 @@ public class DemoMonster : MonoBehaviour
 
     IEnumerator UpdateHit()
     {
-        anim.SetTrigger("isHit");
+        anim.SetBool("isHit", true);
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         ReturnFromHit();
     }
@@ -157,7 +154,11 @@ public class DemoMonster : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 5);
-        this.gameObject.SetActive(false);
+
+        //this.gameObject.SetActive(false);
+
+        // 오브젝트 풀 통해서 관리하기
+        Managers.Pool.GetPool(this.gameObject.name).ReturnObject(this.gameObject);
         m_HpBar.SetActive(false);
     }
 
@@ -203,6 +204,7 @@ public class DemoMonster : MonoBehaviour
 
     void ReturnFromHit()
     {
+        anim.SetBool("isHit", false);
         if (GetDistance(target.position, transform.position) < attackRange)
         {
             ChangeState(MonsterState.attack);
