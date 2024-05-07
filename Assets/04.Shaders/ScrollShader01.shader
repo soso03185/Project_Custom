@@ -66,7 +66,7 @@ Shader "Unlit/ScrollShader01"
                 half4 noise = tex2Dlod(_Flowmap, float4(o.uv, 0,0));  
                 half3 positionWS = TransformObjectToWorld(v.vertex.xyz);
                 
-                o.vertex.y += sin(_Time.y + v.vertex.x + v.vertex.z) * _FlowIntensity * noise.r * 3 ;                                
+                o.vertex.y += sin(_Time.y + v.vertex.x + v.vertex.z)* _FlowIntensity * noise.r * 3 ;                                
 	         
          	    return o;
         	  }
