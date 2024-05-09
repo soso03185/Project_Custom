@@ -5,8 +5,8 @@ using UnityEngine;
 public class Managers : MonoBehaviour
 {
     private static Managers s_instance;
-    public static Managers Instance
-    {
+    public static Managers Instance 
+    { 
         get
         {
             Init();
@@ -19,13 +19,13 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance.pool; } }
 
     public static DataManager Data { get { return Instance.data; } }
-    //public static MonsterManager Monsters { get { return Instance.monsters; } }
+    public static MonsterManager Monsters { get { return Instance.monsters; } }
 
 
     PoolManager pool = new PoolManager();
     ResourceManager resource = new ResourceManager();
     DataManager data = new DataManager();
-    //MonsterManager monsters = new MonsterManager();
+    MonsterManager monsters = new MonsterManager();
 
     static void Init()
     {
@@ -49,3 +49,4 @@ public class Managers : MonoBehaviour
         Data.Init();
     }
 }
+

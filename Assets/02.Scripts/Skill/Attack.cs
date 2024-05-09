@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Attack : Skill
 {
@@ -26,22 +27,15 @@ public class Attack : Skill
             yield return null;
         }
 
-        this.GetComponent<Collider>().enabled = true;
-        this.transform.position = playerObject.transform.position;
+        GetComponent<BoxCollider>().enabled = true; 
+        transform.position = playerObject.transform.position;
+        transform.rotation = playerObject.transform.rotation;
 
-        yield return null;
+        yield return new WaitForSeconds(0.3f);
 
-        this.GetComponent<Collider>().enabled = false;
+        this.GetComponent<BoxCollider>().enabled = false;
         m_animator.SetBool(KeyIsAttack, false);
 
         playerObject.SkillEnd();
-    }
-
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.gameObject.CompareTag("Monster"))
-        {
-            Debug.Log("Hit");
-        }
     }
 }

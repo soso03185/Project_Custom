@@ -12,9 +12,14 @@ public class ActionLogicManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        foreach (var skill in m_actionLogic)
+        //foreach (var skill in m_actionLogic)
+        //{
+        //    Instantiate(skill);
+        //}
+
+        for (int i = 0; i < m_actionLogic.Length; i++)
         {
-            Instantiate(skill);
+            m_actionLogic[i] = Instantiate(m_actionLogic[i]);
         }
     }
 

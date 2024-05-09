@@ -12,6 +12,7 @@ public class DemoMonster : MonoBehaviour
     [SerializeField]
     public MonsterState monsterState = MonsterState.spawn;
 
+    public float m_monsterHp;
     
     //joohong
     private GameObject m_canvas;
@@ -21,29 +22,6 @@ public class DemoMonster : MonoBehaviour
     private GameObject monsterHPBar;
 
     private GameObject m_HpBar;
-
-    //[SerializeField]
-    //float m_monsterHp;
-
-    //public float MonsterHP
-    //{
-    //    get 
-    //    { 
-    //        return m_monsterHp;
-    //    }
-    //    set
-    //    {
-    //        if (monsterState != MonsterState.spawn)
-    //            m_monsterHp = value;
-    //    }
-    //}
-
-    //public float attack;
-    //public float defense;
-    //public float attackSpeed;
-    //public float attackRange;
-
-    //public int moveSpeed;
 
     public Transform target;
     Animator anim;
@@ -57,9 +35,6 @@ public class DemoMonster : MonoBehaviour
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
         anim = GetComponent<Animator>();
-
-        manager = GameObject.Find("MonsterManager").GetComponent<MonsterManager>();
-        manager.AddMonster(this);
 
         //joohong
         m_canvas = GameObject.Find("Canvas");
@@ -162,7 +137,6 @@ public class DemoMonster : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 5);
-
         //this.gameObject.SetActive(false);
 
         // 오브젝트 풀 통해서 관리하기
