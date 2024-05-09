@@ -657,15 +657,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterState: 0
-  m_monsterHp: 0
   monsterHPBar: {fileID: 825477410733528157, guid: 73b4e240388df6e4a849aadc4585901c,
     type: 3}
-  attack: 0
-  defense: 0
-  attackSpeed: 0
-  attackRange: 3
-  moveSpeed: 2
   target: {fileID: 0}
+  monsterID: 2002
   manager: {fileID: 0}
 --- !u!136 &1281440336418130424
 CapsuleCollider:

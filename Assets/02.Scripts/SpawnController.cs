@@ -20,7 +20,6 @@ public class SpawnController : MonoBehaviour
     [System.Serializable]
     public struct SpawnOptions
     {
-        public bool isSpawn;
         public SpawnType spawnType;
         public MonsterName monsterName;
         public int maxMonsterCount;
@@ -37,21 +36,34 @@ public class SpawnController : MonoBehaviour
 
         for (int i = 0; i < monsterListSize; i++)
         {
-            if (spawnList[i].isSpawn)
+            switch (spawnList[i].spawnType)
             {
-                switch (spawnList[i].spawnType)
-                {
-                    case SpawnType.Noraml:
-                        StartCoroutine(this.NormalSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
-                        break;
-                    case SpawnType.Delay:
-                        StartCoroutine(this.DelaySpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
-                        break;
-                    case SpawnType.Group:
-                        StartCoroutine(this.GroupSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
-                        break;
-                }
+                case SpawnType.Noraml:
+                    StartCoroutine(this.NormalSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
+                    break;
+                case SpawnType.Delay:
+                    StartCoroutine(this.DelaySpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
+                    break;
+                case SpawnType.Group:
+                    StartCoroutine(this.GroupSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
+                    break;
             }
+        }
+    }
+
+    public void StartSpawning(SpawnType spawnType, MonsterName monsterName, int maxMonsterCount)
+    {
+        switch (spawnType)
+        {
+            case SpawnType.Noraml:
+                StartCoroutine(this.NormalSpawn(maxMonsterCount, monsterName.ToString()));
+                break;
+            case SpawnType.Delay:
+                StartCoroutine(this.DelaySpawn(maxMonsterCount, monsterName.ToString()));
+                break;
+            case SpawnType.Group:
+                StartCoroutine(this.GroupSpawn(maxMonsterCount, monsterName.ToString()));
+                break;
         }
     }
 
