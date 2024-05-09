@@ -5,16 +5,15 @@ using UnityEngine;
 
 public class MonsterManager
 {
-    public List<DemoMonster> monsters = new List<DemoMonster>();
-    public Player player;
+    public List<GameObject> monsters = new List<GameObject>();
   
 
-    public void AddMonster(DemoMonster monster)
+    public void AddMonster(GameObject monster)
     {
         monsters.Add(monster);
     }
 
-    public void DeleteMonster(DemoMonster monster)
+    public void DeleteMonster(GameObject monster)
     {
         for (int i = 0; i < monsters.Count; i++)
         {
@@ -26,7 +25,7 @@ public class MonsterManager
         }
     }
 
-    public GameObject GetNearestMonster()
+    public GameObject GetNearestMonster(Player player)
     {
         if(monsters.Count == 0)
             return null;
@@ -38,10 +37,10 @@ public class MonsterManager
 
         int index = distances.ToList().IndexOf(minDistance);
 
-        return monsters[index].gameObject;
+        return monsters[index];
     }
 
-    public GameObject GetFarthestMonster()
+    public GameObject GetFarthestMonster(Player player)
     {
         if (monsters.Count == 0)
             return null;
@@ -53,6 +52,6 @@ public class MonsterManager
 
         int index = distances.ToList().IndexOf(maxDistance);
 
-        return monsters[index].gameObject;
+        return monsters[index];
     }
 }

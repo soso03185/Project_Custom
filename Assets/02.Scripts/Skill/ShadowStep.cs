@@ -14,7 +14,7 @@ public class ShadowStep : Skill
 
         while (true)
         {
-            target = Managers.Monsters.GetFarthestMonster();
+            target = Managers.Monsters.GetFarthestMonster(player);
 
             if (target != null)
             {
@@ -28,14 +28,17 @@ public class ShadowStep : Skill
 
         direction.y = 0;
 
-        player.transform.rotation = Quaternion.LookRotation(direction);
+        if (direction != Vector3.zero)
+        {
+            player.transform.rotation = Quaternion.LookRotation(-direction);
+        }
 
-        player.transform.position = target.transform.position;
+        player.transform.position = target.transform.position +
+                                    (target.transform.position - player.transform.position).normalized * 3;
 
         m_animator.SetBool(KeyIsMove, false);
 
         player.SkillEnd();
     }
-
 
 }

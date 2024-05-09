@@ -41,13 +41,13 @@ public class SpawnSystem : MonoBehaviour
                 switch (spawnList[i].spawnType)
                 {
                     case SpawnType.Noraml:
-                        CoroutineHandler.instance.StartMyCoroutine(this.NormalSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
+                        StartCoroutine(this.NormalSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
                         break;
                     case SpawnType.Delay:
-                        CoroutineHandler.instance.StartMyCoroutine(this.DelaySpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
+                        StartCoroutine(this.DelaySpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
                         break;
                     case SpawnType.Group:
-                        CoroutineHandler.instance.StartMyCoroutine(this.GroupSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
+                        StartCoroutine(this.GroupSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
                         break;
                 }
             }

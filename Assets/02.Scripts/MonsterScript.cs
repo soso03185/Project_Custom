@@ -54,9 +54,6 @@ public class DemoMonster : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
         anim = GetComponent<Animator>();
 
-        manager = Managers.Monsters;
-        manager.AddMonster(this);
-
         //joohong
         m_canvas = GameObject.Find("Canvas");
 
@@ -153,7 +150,6 @@ public class DemoMonster : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 5);
-
         //this.gameObject.SetActive(false);
 
         // 오브젝트 풀 통해서 관리하기
