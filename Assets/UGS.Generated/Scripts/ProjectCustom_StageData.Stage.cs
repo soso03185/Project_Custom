@@ -120,7 +120,7 @@ namespace ProjectCustom_StageData
             FieldInfo[] fields = typeof(Stage).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["Stage"];
+            var sheet = jsonObject["StageData"];
 
             foreach (var column in sheet.Keys)
             {

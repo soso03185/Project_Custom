@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UGS;
+using GoogleSheet.Type;
 
 public class UGS_DataManager : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class UGS_DataManager : MonoBehaviour
         UserDataLocalLoad();
         StandardDataLocalLoad();
         MonsterDataLocalLoad();
-        StageDataLocalLoad();
+        //StageDataLocalLoad();
     }
 
     //------------------------------------ StandardData ------------------------------------
@@ -107,30 +108,30 @@ public class UGS_DataManager : MonoBehaviour
         }, true);
     }
 
-    public void StageDataLocalLoad()
-    {
-        Debug.Log("StageData_LocalLoad");
+    //public void StageDataLocalLoad()
+    //{
+    //    Debug.Log("StageData_LocalLoad");
 
-        m_StageDataDic.Clear();
+    //    m_StageDataDic.Clear();
 
-        foreach(var value in ProjectCustom_StageData.StageData.StageDataList)
-        {
-            m_StageDataDic.Add(value.StageLevel, value);
-        }
-    }
+    //    foreach(var value in ProjectCustom_StageData.StageData.StageDataList)
+    //    {
+    //        m_StageDataDic.Add(value.StageLevel, value);
+    //    }
+    //}
 
-    public void StageDataLiveLoad()
-    {
-        Debug.Log("StageData_LiveLoad");
+    //public void StageDataLiveLoad()
+    //{
+    //    Debug.Log("StageData_LiveLoad");
 
-        m_StageDataDic.Clear();
+    //    m_StageDataDic.Clear();
 
-        UnityGoogleSheet.LoadFromGoogle<int, ProjectCustom_StageData.StageData>((list, map) => {
-            list.ForEach(x => {
-                m_StageDataDic.Add(x.StageLevel, x);
-            });
-        }, true);
-    }
+    //    UnityGoogleSheet.LoadFromGoogle<int, ProjectCustom_StageData.StageData>((list, map) => {
+    //        list.ForEach(x => {
+    //            m_StageDataDic.Add(x.StageLevel, x);
+    //        });
+    //    }, true);
+    //}
 
     //------------------------------------ Show ------------------------------------
     [VisibleEnum(typeof(ShowDataType))]
@@ -159,4 +160,5 @@ public class UGS_DataManager : MonoBehaviour
 
         }
     }
+
 }

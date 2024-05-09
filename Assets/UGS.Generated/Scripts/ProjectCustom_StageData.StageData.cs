@@ -57,8 +57,6 @@ namespace ProjectCustom_StageData
 /* Fields. */
 
 		public System.Int32 Key;
-		public System.Int32 StageLevel;
-		public System.Int32 maxMonsterCount;
   
 
 #region fuctions

@@ -107,13 +107,13 @@ public class DataManager
         return monsterInfo;
     }
 
-    public StageInfo GetStageInfo(int stageLevel)
-    {
-        StageInfo stageInfo;
+    //public StageInfo GetStageInfo(int stageLevel)
+    //{
+    //    StageInfo stageInfo;
 
-        stageInfo.StageLevel = UGS_Data.m_StageDataDic[stageLevel].StageLevel;
-        stageInfo.maxMonsterCount = UGS_Data.m_StageDataDic[stageLevel].maxMonsterCount;
+    //    stageInfo.StageLevel = UGS_Data.m_StageDataDic[stageLevel].StageLevel;
+    //    stageInfo.maxMonsterCount = UGS_Data.m_StageDataDic[stageLevel].maxMonsterCount;
 
-        return stageInfo;
-    }
+    //    return stageInfo;
+    //}
 }

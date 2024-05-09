@@ -35,7 +35,7 @@ public class Stage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stageInfo = Managers.Data.GetStageInfo(stageLevel);
+        //stageInfo = Managers.Data.GetStageInfo(stageLevel);
     }
 
     // Update is called once per frame
