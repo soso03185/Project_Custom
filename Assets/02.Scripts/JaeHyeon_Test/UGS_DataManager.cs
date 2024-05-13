@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UGS;
+using GoogleSheet.Type;
+using System;
 
 public class UGS_DataManager : MonoBehaviour
 {
@@ -127,7 +129,6 @@ public class UGS_DataManager : MonoBehaviour
                         Debug.Log($"MonsterName: {child.Value.Name}, MonsterID: {child.Value.MonsterID}");
                 }
                 break;
-
         }
     }
 }
