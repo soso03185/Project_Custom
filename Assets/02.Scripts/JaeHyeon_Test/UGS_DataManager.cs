@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UGS;
+using GoogleSheet.Type;
+using System;
 
 public class UGS_DataManager : MonoBehaviour
 {
@@ -113,7 +115,7 @@ public class UGS_DataManager : MonoBehaviour
 
         m_StageDataDic.Clear();
 
-        foreach(var value in ProjectCustom_StageData.StageData.StageDataList)
+        foreach (var value in ProjectCustom_StageData.StageData.StageDataList)
         {
             m_StageDataDic.Add(value.StageLevel, value);
         }
@@ -125,8 +127,10 @@ public class UGS_DataManager : MonoBehaviour
 
         m_StageDataDic.Clear();
 
-        UnityGoogleSheet.LoadFromGoogle<int, ProjectCustom_StageData.StageData>((list, map) => {
-            list.ForEach(x => {
+        UnityGoogleSheet.LoadFromGoogle<int, ProjectCustom_StageData.StageData>((list, map) =>
+        {
+            list.ForEach(x =>
+            {
                 m_StageDataDic.Add(x.StageLevel, x);
             });
         }, true);
@@ -154,6 +158,12 @@ public class UGS_DataManager : MonoBehaviour
                 {
                     foreach (var child in m_MonsterDataDic)
                         Debug.Log($"MonsterName: {child.Value.Name}, MonsterID: {child.Value.MonsterID}");
+                }
+                break;
+            case (int)ShowDataType.Stage:
+                {
+                    foreach (var child in m_StageDataDic)
+                        Debug.Log($"StageLevel: {child.Value.StageLevel}");
                 }
                 break;
 

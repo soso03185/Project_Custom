@@ -7,6 +7,8 @@ using static Define;
 
 public class SpawnController : MonoBehaviour
 {
+    public static SpawnController spawnInstance;
+
     public Transform target;
 
     private bool isGameOver = false;
@@ -25,9 +27,27 @@ public class SpawnController : MonoBehaviour
         public int maxMonsterCount;
     }
 
+    private void Awake()
+    {
+        spawnInstance = this;
+    }
+
     private void Start()
     {
         StartSpawning();
+    }
+
+    public void Update()
+    {
+        StageClear();
+    }
+
+    public void StageClear()
+    {
+        if(totalMonsterCount == 0)
+        {
+            isGameOver = true;
+        }
     }
 
     public void StartSpawning()
@@ -69,68 +89,58 @@ public class SpawnController : MonoBehaviour
 
     IEnumerator NormalSpawn(int maxmonsterCount, string _monsterName)
     {
-        while(!isGameOver)
-        {
-            int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
+        int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
 
-            if(monsterCount < maxmonsterCount)
-            {
-                yield return new WaitForSeconds(0.2f);
-                SpawnMonster(_monsterName);
-            }
-            else
-            {
-                yield return null;
-            }
+        if(monsterCount < maxmonsterCount)
+        {
+            yield return new WaitForSeconds(0.2f);
+            SpawnMonster(_monsterName);
+        }
+        else
+        {
+            yield return null;
         }
     }
 
     IEnumerator DelaySpawn(int maxMonsterCount, string _monsterName)
     {
-        while (!isGameOver)
-        {
-            int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
+        int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
 
-            if (monsterCount < maxMonsterCount)
-            {
-                yield return new WaitForSeconds(Random.Range(0.1f, 3.0f));
-                SpawnMonster(_monsterName);
-            }
-            else
-            {
-                yield return null;
-            }
+        if (monsterCount < maxMonsterCount)
+        {
+            yield return new WaitForSeconds(Random.Range(0.1f, 3.0f));
+            SpawnMonster(_monsterName);
+        }
+        else
+        {
+            yield return null;
         }
     }
 
     IEnumerator GroupSpawn(int maxmonsterCount, string _monsterName)
     {
-        while (!isGameOver)
+        int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
+        if (monsterCount >= maxmonsterCount)
         {
-            int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
-            if (monsterCount >= maxmonsterCount)
-            {
-                yield return null;
-                continue;
-            }
-
-            int groupSize = Random.Range(3, 7);
-
-            Vector3 groupCenter = GetRandomPositionAroundPlayer();
-
-            for (int i = 0; i < groupSize; i++)
-            {
-                Vector3 spawnPositionOffset = CalculateFormationOffset(i, groupSize);
-
-                Vector3 spawnPosition = groupCenter + spawnPositionOffset;
-
-                totalMonsterCount++;
-                Managers.Pool.GetPool(_monsterName).GetGameObject(_monsterName, spawnPosition);
-                monsterSpawnPos.Add(spawnPosition);
-            }
-
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
         }
+
+        int groupSize = Random.Range(3, 7);
+
+        Vector3 groupCenter = GetRandomPositionAroundPlayer();
+
+        for (int i = 0; i < groupSize; i++)
+        {
+            Vector3 spawnPositionOffset = CalculateFormationOffset(i, groupSize);
+
+            Vector3 spawnPosition = groupCenter + spawnPositionOffset;
+
+            totalMonsterCount++;
+            Managers.Pool.GetPool(_monsterName).GetGameObject(_monsterName, spawnPosition);
+            monsterSpawnPos.Add(spawnPosition);
+        }
+
+        yield return new WaitForSeconds(0.1f);
     }
 
     Vector3 CalculateFormationOffset(int index, int groupSize)

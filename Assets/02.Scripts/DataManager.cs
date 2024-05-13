@@ -27,6 +27,7 @@ public class DataManager
         public int Goods2;
         public int Goods3;
         public int Costume;
+        public int StageLevel;
     }
 
     public struct MonsterInfo
@@ -48,19 +49,20 @@ public class DataManager
 
     public struct StageInfo
     {
-        public int StageLevel;
+        public int key;
+        public int stageLevel;
         public int maxMonsterCount;
     }
 
     public UGS_DataManager UGS_Data;
 
-    public void Init()
-    {
-        UGS_Data = GameObject.Find("DataLoadTest").GetComponent<UGS_DataManager>();
-    }
-
     public UserInfo GetUserInfo(int UserID)
     {
+        if(UGS_Data == null)
+        {
+            UGS_Data = GameObject.Find("DataLoadTest").GetComponent<UGS_DataManager>();
+        }
+
         UserInfo userInfo;
 
         userInfo.UserID = UGS_Data.m_UserDataDic[UserID].UserID;
@@ -82,12 +84,18 @@ public class DataManager
         userInfo.Goods2 = UGS_Data.m_UserDataDic[UserID].Goods2;
         userInfo.Goods3 = UGS_Data.m_UserDataDic[UserID].Goods3;
         userInfo.Costume = UGS_Data.m_UserDataDic[UserID].Costume;
+        userInfo.StageLevel = UGS_Data.m_UserDataDic[UserID].StageLevel;
 
         return userInfo;
     }
 
     public MonsterInfo GetMonsterInfo(int monsterID)
     {
+        if (UGS_Data == null)
+        {
+            UGS_Data = GameObject.Find("DataLoadTest").GetComponent<UGS_DataManager>();
+        }
+
         MonsterInfo monsterInfo;
         
         monsterInfo.MonsterID = UGS_Data.m_MonsterDataDic[monsterID].MonsterID;
@@ -109,10 +117,16 @@ public class DataManager
 
     public StageInfo GetStageInfo(int stageLevel)
     {
+        if (UGS_Data == null)
+        {
+            UGS_Data = GameObject.Find("DataLoadTest").GetComponent<UGS_DataManager>();
+        }
+
         StageInfo stageInfo;
 
-        stageInfo.StageLevel = UGS_Data.m_StageDataDic[stageLevel].StageLevel;
-        stageInfo.maxMonsterCount = UGS_Data.m_StageDataDic[stageLevel].maxMonsterCount;
+        stageInfo.key = UGS_Data.m_StageDataDic[stageLevel].Key;
+        stageInfo.stageLevel = UGS_Data.m_StageDataDic[stageLevel].StageLevel;
+        stageInfo.maxMonsterCount = UGS_Data.m_StageDataDic[stageLevel].MaxMonsterCount;
 
         return stageInfo;
     }
