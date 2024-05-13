@@ -9,23 +9,19 @@ public class ActionLogicManager : MonoBehaviour
     public float m_convertingTime;
 
     public int m_currentIndex = 0;
-    // Start is called before the first frame update
+
+    public Skill this[int i]
+    {
+        get { return m_actionLogic[i]; }
+        set { m_actionLogic[i] = value; }
+    }
+
     void Awake()
     {
-        //foreach (var skill in m_actionLogic)
-        //{
-        //    Instantiate(skill);
-        //}
-
         for (int i = 0; i < m_actionLogic.Length; i++)
         {
             m_actionLogic[i] = Instantiate(m_actionLogic[i]);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     Skill GetCurrentSkill()
@@ -40,5 +36,11 @@ public class ActionLogicManager : MonoBehaviour
         {
             UI.StartCoroutine(UI.UIMove());
         }
+    }
+
+    public void Reset()
+    {
+        StopAllCoroutines();
+        m_currentIndex = 0;
     }
 }
