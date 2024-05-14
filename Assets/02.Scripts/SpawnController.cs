@@ -7,13 +7,13 @@ using static Define;
 
 public class SpawnController : MonoBehaviour
 {
-    public static SpawnController spawnInstance;
+    public SpawnController spawnInstance;
 
     public Transform target;
 
     private bool isGameOver = false;
     public int totalMonsterCount;
-
+    public int stageMaxMonsterCount;
     private List<Vector3> monsterSpawnPos = new List<Vector3>();
     public float spawnRadius = 10f;
 
@@ -36,24 +36,10 @@ public class SpawnController : MonoBehaviour
     {
         StartSpawning();
     }
-
-    public void Update()
-    {
-        StageClear();
-    }
-
-    public void StageClear()
-    {
-        if(totalMonsterCount == 0)
-        {
-            isGameOver = true;
-        }
-    }
-
     public void StartSpawning()
     {
         int monsterListSize = spawnList.Count;
-
+ 
         for (int i = 0; i < monsterListSize; i++)
         {
             switch (spawnList[i].spawnType)
@@ -71,76 +57,102 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    public void StartSpawning(SpawnType spawnType, MonsterName monsterName, int maxMonsterCount)
+    private void Update()
     {
-        switch (spawnType)
+        StopSpawning();
+    }
+
+    public void StopSpawning()
+    {
+        if (totalMonsterCount == stageMaxMonsterCount)
         {
-            case SpawnType.Noraml:
-                StartCoroutine(this.NormalSpawn(maxMonsterCount, monsterName.ToString()));
-                break;
-            case SpawnType.Delay:
-                StartCoroutine(this.DelaySpawn(maxMonsterCount, monsterName.ToString()));
-                break;
-            case SpawnType.Group:
-                StartCoroutine(this.GroupSpawn(maxMonsterCount, monsterName.ToString()));
-                break;
+            Debug.Log("모든 몬스터 소환 완료");
+            StopAllCoroutines();
         }
     }
+    //public void StartSpawning(SpawnType spawnType, MonsterName monsterName, int maxMonsterCount)
+    //{
+    //    while(totalMonsterCount >= maxMonsterCount)
+    //    {
+    //        switch (spawnType)
+    //        {
+    //            case SpawnType.Noraml:
+    //                StartCoroutine(this.NormalSpawn(maxMonsterCount, monsterName.ToString()));
+    //                break;
+    //            case SpawnType.Delay:
+    //                StartCoroutine(this.DelaySpawn(maxMonsterCount, monsterName.ToString()));
+    //                break;
+    //            case SpawnType.Group:
+    //                StartCoroutine(this.GroupSpawn(maxMonsterCount, monsterName.ToString()));
+    //                break;
+    //        }
+    //    }
+    //}
 
     IEnumerator NormalSpawn(int maxmonsterCount, string _monsterName)
     {
-        int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
+        while(!isGameOver)
+        {
+            int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
 
-        if(monsterCount < maxmonsterCount)
-        {
-            yield return new WaitForSeconds(0.2f);
-            SpawnMonster(_monsterName);
-        }
-        else
-        {
-            yield return null;
+            if(monsterCount < maxmonsterCount)
+            {
+                yield return new WaitForSeconds(0.2f);
+                SpawnMonster(_monsterName);
+            }
+            else
+            {
+                yield return null;
+            }
         }
     }
 
     IEnumerator DelaySpawn(int maxMonsterCount, string _monsterName)
     {
-        int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
+        while (!isGameOver)
+        {
+            int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
 
-        if (monsterCount < maxMonsterCount)
-        {
-            yield return new WaitForSeconds(Random.Range(0.1f, 3.0f));
-            SpawnMonster(_monsterName);
-        }
-        else
-        {
-            yield return null;
+            if (monsterCount < maxMonsterCount)
+            {
+                yield return new WaitForSeconds(Random.Range(0.1f, 3.0f));
+                SpawnMonster(_monsterName);
+            }
+            else
+            {
+                yield return null;
+            }
         }
     }
 
     IEnumerator GroupSpawn(int maxmonsterCount, string _monsterName)
     {
-        int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
-        if (monsterCount >= maxmonsterCount)
+        while (!isGameOver)
         {
-            yield return null;
+            int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
+            if (monsterCount >= maxmonsterCount)
+            {
+                yield return null;
+                continue;
+            }
+
+            int groupSize = Random.Range(3, 7);
+
+            Vector3 groupCenter = GetRandomPositionAroundPlayer();
+
+            for (int i = 0; i < groupSize; i++)
+            {
+                Vector3 spawnPositionOffset = CalculateFormationOffset(i, groupSize);
+
+                Vector3 spawnPosition = groupCenter + spawnPositionOffset;
+
+                totalMonsterCount++;
+                Managers.Pool.GetPool(_monsterName).GetGameObject(_monsterName, spawnPosition);
+                monsterSpawnPos.Add(spawnPosition);
+            }
+
+            yield return new WaitForSeconds(0.1f);
         }
-
-        int groupSize = Random.Range(3, 7);
-
-        Vector3 groupCenter = GetRandomPositionAroundPlayer();
-
-        for (int i = 0; i < groupSize; i++)
-        {
-            Vector3 spawnPositionOffset = CalculateFormationOffset(i, groupSize);
-
-            Vector3 spawnPosition = groupCenter + spawnPositionOffset;
-
-            totalMonsterCount++;
-            Managers.Pool.GetPool(_monsterName).GetGameObject(_monsterName, spawnPosition);
-            monsterSpawnPos.Add(spawnPosition);
-        }
-
-        yield return new WaitForSeconds(0.1f);
     }
 
     Vector3 CalculateFormationOffset(int index, int groupSize)

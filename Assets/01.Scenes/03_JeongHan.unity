@@ -708,16 +708,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d49927a8990394596c5e2a178285af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnInstance: {fileID: 0}
   target: {fileID: 4368944211882816910}
   totalMonsterCount: 0
+  stageMaxMonsterCount: 200
   spawnRadius: 10
   spawnList:
-  - spawnType: 1
+  - spawnType: 2
     monsterName: 0
-    maxMonsterCount: 50
+    maxMonsterCount: 150
   - spawnType: 0
     monsterName: 1
-    maxMonsterCount: 20
+    maxMonsterCount: 50
 --- !u!4 &573357771
 Transform:
   m_ObjectHideFlags: 0
@@ -4138,13 +4140,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_actionLogic:
   - {fileID: 6669942240919193889}
-  - {fileID: 7319727643887558374, guid: e41c0de581c2a8249807d09513ba7fbf, type: 3}
+  - {fileID: 331381250196649474, guid: dea0193b9cca9c344afe1a4ebcfbef4f, type: 3}
   - {fileID: 580312075908362565}
-  - {fileID: 7319727643887558374, guid: e41c0de581c2a8249807d09513ba7fbf, type: 3}
+  - {fileID: 969437774008707759, guid: 79db794f7781e5d4ab939b9dcf9067ba, type: 3}
   - {fileID: 6413427804335540569}
-  - {fileID: 7319727643887558374, guid: e41c0de581c2a8249807d09513ba7fbf, type: 3}
+  - {fileID: 331381250196649474, guid: dea0193b9cca9c344afe1a4ebcfbef4f, type: 3}
   - {fileID: 2255882719401053296}
-  - {fileID: 7319727643887558374, guid: e41c0de581c2a8249807d09513ba7fbf, type: 3}
+  - {fileID: 969437774008707759, guid: 79db794f7781e5d4ab939b9dcf9067ba, type: 3}
   m_actionLogicUI:
   - {fileID: 6439147487921982501}
   - {fileID: 4328569009313337220}

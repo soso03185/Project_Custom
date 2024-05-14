@@ -30,6 +30,7 @@ public class DataManager
         public int StageLevel;
     }
 
+    [System.Serializable]
     public struct MonsterInfo
     {
         public int MonsterID;

@@ -15,6 +15,9 @@ public class StageManager
     // 그 스테이지의 몬스터 수
     public int maxMonsterCount;
 
+    // 죽은 몬스터 수
+    public int deadMonsterCount;
+
     // 몬스터 종류
 
     // 보스 스테이지인지의 여부

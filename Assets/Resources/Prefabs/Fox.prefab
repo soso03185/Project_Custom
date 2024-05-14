@@ -996,11 +996,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterState: 0
+  m_monsterHp: 100
   monsterHPBar: {fileID: 825477410733528157, guid: 73b4e240388df6e4a849aadc4585901c,
     type: 3}
   target: {fileID: 0}
   monsterID: 2003
-  manager: {fileID: 0}
 --- !u!136 &8350257378555581540
 CapsuleCollider:
   m_ObjectHideFlags: 0

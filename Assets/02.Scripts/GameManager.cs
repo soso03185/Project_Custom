@@ -26,17 +26,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        Init();
+    }
+
     public void Init()
     {
         userInfo = Managers.Data.GetUserInfo(1001);
         currentStage = userInfo.StageLevel;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Init();
-    }
 
     // Update is called once per frame
     void Update()
