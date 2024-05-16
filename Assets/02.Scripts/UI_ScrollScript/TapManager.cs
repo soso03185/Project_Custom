@@ -15,8 +15,16 @@ public class TapManager : MonoBehaviour
     {
         for(int i = 0; i < Tab.Length; i++)
         {
-            Tab[i].SetActive(i == n);
-            TabBtnImage[i].sprite = i == n ? SelectSprite[i] : IdleSprite[i];
+            if (Tab[i].activeSelf == true && i == n)
+            {
+                Tab[i].SetActive(false);
+                TabBtnImage[i].sprite = IdleSprite[i];
+            }
+            else
+            {
+                Tab[i].SetActive(i == n);
+                TabBtnImage[i].sprite = i == n ? SelectSprite[i] : IdleSprite[i];
+            }
         }
     }
     
