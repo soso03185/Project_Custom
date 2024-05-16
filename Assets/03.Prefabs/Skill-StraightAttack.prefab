@@ -98,6 +98,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 13621c03ddb854c829964bd9d2e1def5, type: 3}
+  atkCount: 1
+  atk: 10
+  atkRange: 1
+  castingTime: 0
+  criticalChance: 50
+  criticalMultiplier: 1.5
 --- !u!65 &2984354661924869499
 BoxCollider:
   m_ObjectHideFlags: 0

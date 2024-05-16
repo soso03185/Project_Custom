@@ -7,9 +7,11 @@ using GoogleSheet.Type;
 public class UGS_DataManager : MonoBehaviour
 {
     public Dictionary<int, ProjectCustom_UserData.UserData> m_UserDataDic = new Dictionary<int, ProjectCustom_UserData.UserData>();
-    public Dictionary<int, ProjectCustom_UserData.StandardData> m_StandardDataDic = new Dictionary<int, ProjectCustom_UserData.StandardData>();
-    public Dictionary<int, ProjectCustom_MonsterData.MonsterData> m_MonsterDataDic = new Dictionary<int, ProjectCustom_MonsterData.MonsterData>();
 
+    public Dictionary<int, ProjectCustom_UserData.StandardData> m_StandardDataDic = new Dictionary<int, ProjectCustom_UserData.StandardData>();
+
+    public Dictionary<int, ProjectCustom_MonsterData.MonsterData> m_MonsterDataDic = new Dictionary<int, ProjectCustom_MonsterData.MonsterData>();
+    
     public Dictionary<int, ProjectCustom_StageData.StageData> m_StageDataDic = new Dictionary<int, ProjectCustom_StageData.StageData>();
 
     public enum ShowDataType

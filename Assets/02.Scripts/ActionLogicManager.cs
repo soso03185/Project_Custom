@@ -12,21 +12,21 @@ public class ActionLogicManager : MonoBehaviour
 
     public Skill this[int i]
     {
-        get { return m_actionLogic[i]; }
-        set { m_actionLogic[i] = value; }
+        get => m_actionLogic[i];
+        set => m_actionLogic[i] = value;
     }
 
     void Awake()
     {
         for (int i = 0; i < m_actionLogic.Length; i++)
         {
-            m_actionLogic[i] = Instantiate(m_actionLogic[i]);
+            this[i] = Instantiate(this[i]);
         }
     }
 
     Skill GetCurrentSkill()
     {
-        return m_actionLogic[m_currentIndex];
+        return this[m_currentIndex];
     }
 
     public void NextAction()

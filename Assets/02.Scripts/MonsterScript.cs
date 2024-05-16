@@ -177,7 +177,14 @@ public class DemoMonster : MonoBehaviour
             {
                 Debug.Log("Hit");
                 ChangeState(MonsterState.hit);
-                IsDamaged(100);
+                if (other.gameObject.GetComponent<Attack>().criticalChance > Random.value * 100)
+                {
+                    IsDamaged(other.gameObject.GetComponent<Attack>().atk * other.gameObject.GetComponent<Attack>().criticalMultiplier);
+                }
+                else
+                {
+                    IsDamaged(other.gameObject.GetComponent<Attack>().atk);
+                }
             }
         }
     }

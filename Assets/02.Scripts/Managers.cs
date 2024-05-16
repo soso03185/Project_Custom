@@ -15,18 +15,18 @@ public class Managers : MonoBehaviour
     }
 
     public static ResourceManager Resoruce { get { return Instance.resource; } }
-
     public static PoolManager Pool { get { return Instance.pool; } }
-
     public static DataManager Data { get { return Instance.data; } }
     public static MonsterManager Monsters { get { return Instance.monsters; } }
+    public static RuneManager Runes { get { return Instance.runes; }
+    }
 
 
     PoolManager pool = new PoolManager();
     ResourceManager resource = new ResourceManager();
     DataManager data = new DataManager();
     MonsterManager monsters = new MonsterManager();
-
+    RuneManager runes = new RuneManager();
     static void Init()
     {
         if (s_instance == null)

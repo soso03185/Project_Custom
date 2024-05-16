@@ -10,26 +10,40 @@ public class Attack : Skill
     {
     }
 
+    public int atkCount;
+    public float atk;
+    public float atkRange;
+    public float castingTime;
+    public float criticalChance;
+    public float criticalMultiplier;
+
     public override IEnumerator Play(Player playerObject)
     {
         yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(castingTime);
         float elapsedTime = 0;
         m_animator = playerObject.GetComponent<Animator>();
         m_animator.SetBool(KeyIsAttack, true);
-        while (!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
-        {
-            yield return null;
-        }
 
-        while (m_animator.GetCurrentAnimatorStateInfo(0).length >= elapsedTime)
+        for(int i = 0; i < atkCount; i++)
         {
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+            while (!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
+            {
+                yield return null;
+            }
 
-        GetComponent<BoxCollider>().enabled = true; 
-        transform.position = playerObject.transform.position;
-        transform.rotation = playerObject.transform.rotation;
+            while (m_animator.GetCurrentAnimatorStateInfo(0).length >= elapsedTime)
+            {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            GetComponent<BoxCollider>().enabled = true;
+            GetComponent<BoxCollider>().size *= atkRange;
+            transform.position = playerObject.transform.position;
+            transform.rotation = playerObject.transform.rotation;
+        }
+        //출혈 효과 부여
 
         yield return new WaitForSeconds(0.3f);
 
