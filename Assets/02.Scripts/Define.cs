@@ -16,12 +16,13 @@ public class Define
     public enum MonsterName
     {
         Fox,
-        Skeleton
+        Skeleton,
+        Slime
     }
 
     public enum SpawnType
     {
-        Noraml,
+        Normal,
         Delay,
         Group
     }

@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
 
     public int currentStage;
 
+
     private DataManager.UserInfo userInfo;
-    private DataManager.StageInfo stageInfo;
     private void Awake()
     {
         if(Instance == null)
@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         userInfo = Managers.Data.GetUserInfo(1001);
         currentStage = userInfo.StageLevel;
+        Managers.Stage.BeginStage(currentStage);
     }
 
 
@@ -46,7 +47,7 @@ public class GameManager : MonoBehaviour
         {
             Managers.Stage.RestartStage();
         }
-        else if(StageClear())
+        else if(Managers.Stage.isStageClear())
         {
             Managers.Stage.LevelUpStage();
         }
@@ -63,8 +64,4 @@ public class GameManager : MonoBehaviour
             return false;
     }
 
-    public bool StageClear()
-    {
-        return false;
-    }
 }

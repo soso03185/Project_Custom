@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UGS;
 using static DataManager;
+using static Define;
+using System;
 
 public class DataManager
 {
@@ -53,6 +55,15 @@ public class DataManager
         public int key;
         public int stageLevel;
         public int maxMonsterCount;
+        public MonsterName monster1Name;
+        public int monster1Count;
+        public SpawnType spawnType1;
+        public MonsterName monster2Name;
+        public int monster2Count;
+        public SpawnType spawnType2;
+        public bool isBossStage;
+        public string bossMonsterName;
+        public int monsterTypeCount;
     }
 
     public UGS_DataManager UGS_Data;
@@ -128,6 +139,15 @@ public class DataManager
         stageInfo.key = UGS_Data.m_StageDataDic[stageLevel].Key;
         stageInfo.stageLevel = UGS_Data.m_StageDataDic[stageLevel].StageLevel;
         stageInfo.maxMonsterCount = UGS_Data.m_StageDataDic[stageLevel].MaxMonsterCount;
+        stageInfo.monster1Name = (MonsterName)Enum.Parse(typeof(MonsterName), UGS_Data.m_StageDataDic[stageLevel].Monster1Name);
+        stageInfo.monster1Count = UGS_Data.m_StageDataDic[stageLevel].Monster1Count;
+        stageInfo.spawnType1 = (SpawnType)Enum.Parse(typeof(SpawnType), UGS_Data.m_StageDataDic[stageLevel].SpawnOption1);
+        stageInfo.monster2Name = (MonsterName)Enum.Parse(typeof(MonsterName), UGS_Data.m_StageDataDic[stageLevel].Monster2Name);
+        stageInfo.monster2Count = UGS_Data.m_StageDataDic[stageLevel].Monster2Count;
+        stageInfo.spawnType2 = (SpawnType)Enum.Parse(typeof(SpawnType), UGS_Data.m_StageDataDic[stageLevel].SpawnOption2);
+        stageInfo.isBossStage = System.Convert.ToBoolean(UGS_Data.m_StageDataDic[stageLevel].IsBossStage);
+        stageInfo.bossMonsterName = UGS_Data.m_StageDataDic[stageLevel].BossMonster;
+        stageInfo.monsterTypeCount = UGS_Data.m_StageDataDic[stageLevel].MonsterTypeCount;
 
         return stageInfo;
     }

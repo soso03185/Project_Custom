@@ -996,10 +996,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterState: 0
-  m_monsterHp: 100
   monsterHPBar: {fileID: 825477410733528157, guid: 73b4e240388df6e4a849aadc4585901c,
     type: 3}
   target: {fileID: 0}
+  monsterInfo:
+    MonsterID: 0
+    Name: 
+    Level: 0
+    Hp: 0
+    Atk: 0
+    Defense: 0
+    MoveSpeed: 0
+    AttackSpeed: 0
+    AttackRange: 0
+    NowExp: 0
+    Gold: 0
+    Goods: 0
+    Goods2: 0
   monsterID: 2003
 --- !u!136 &8350257378555581540
 CapsuleCollider:
@@ -1049,7 +1062,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 4
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!1 &3790884040381419236
 GameObject:

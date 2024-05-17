@@ -63,7 +63,7 @@ public class DemoMonster : MonoBehaviour
         switch (monsterState)
         {
             case MonsterState.spawn:
-                TestUpdateSpawn();
+                UpdateSpawn();
                 break;
             case MonsterState.move:
                 UpdateMove();
@@ -72,10 +72,10 @@ public class DemoMonster : MonoBehaviour
                 UpdateAttack();
                 break;
             case MonsterState.hit:
-                TestUpdateHit();
+                UpdateHit();
                 break;
             case MonsterState.dead:
-                TestUpdateDead();
+                UpdateDead();
                 break;
         }
     }
@@ -88,7 +88,7 @@ public class DemoMonster : MonoBehaviour
         }
     }
 
-    void TestUpdateSpawn()
+    void UpdateSpawn()
     {
         LookAtPlayer();
         
@@ -127,15 +127,16 @@ public class DemoMonster : MonoBehaviour
         }
     }
 
-    void TestUpdateHit()
+    void UpdateHit()
     {
         anim.SetBool("isHit", true);
     }
 
 
-    void TestUpdateDead()
+    void UpdateDead()
     {
         anim.SetBool("isDead", true);
+
     }
 
 
@@ -167,7 +168,6 @@ public class DemoMonster : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Skill"))
             {
-                Debug.Log("Hit");
                 ChangeState(MonsterState.hit);
                 IsDamaged(100);
             }
@@ -214,6 +214,8 @@ public class DemoMonster : MonoBehaviour
     // 몬스터 삭제 이벤트 함수
     void AnimEventDead()
     {
+        Managers.Stage.deadMonsterCount++;
+
         Managers.Pool.GetPool(this.gameObject.name).ReturnObject(this.gameObject);
         m_HpBar.SetActive(false);
 
