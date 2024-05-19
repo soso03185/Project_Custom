@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,18 +10,22 @@ public class LogicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 {
     LogicUIManager m_LogicUIMgr;
     ScrollRect m_ParentScrollRect;
-    float m_RectWidth = 0f;
     bool m_IsForParent = false;
 
     public void Start()
     {
         m_LogicUIMgr = GameObject.FindWithTag("LogicUIManager").GetComponent<LogicUIManager>();
         m_ParentScrollRect = GameObject.FindWithTag("LogicUIManager").GetComponent<ScrollRect>();
-        m_RectWidth = GameObject.FindWithTag("LogicUIManager").GetComponent<RectTransform>().rect.width;
+    }
+
+    public void CardClick()
+    {
+        Debug.Log("Card Click !");
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        // Bigger Vector? X,Y 
         m_IsForParent = Mathf.Abs(eventData.delta.x) > Mathf.Abs(eventData.delta.y);
 
         if (m_IsForParent)
@@ -45,19 +50,10 @@ public class LogicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
         else
         {
-            m_LogicUIMgr.m_DummyCard.transform.position = eventData.position;
-
-            if (eventData.position.x >= m_RectWidth)
-            {
-                Debug.Log("Scrolling to Right");
-            }
-            if (eventData.position.x <= 0)
-            {
-                Debug.Log("Scrolling to Left");
-            }
+            m_LogicUIMgr.DragCard(eventData, transform.position);
         }
     }
-
+    
     public void OnEndDrag(PointerEventData eventData)
     {
         if (m_IsForParent)
@@ -69,6 +65,7 @@ public class LogicCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             Debug.Log("Card OnEndDrag");
             m_LogicUIMgr.m_DummyCard.SetActive(false);
+            m_LogicUIMgr.m_TestEmptyCard.gameObject.SetActive(false);
         }
     }
 }
