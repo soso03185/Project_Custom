@@ -86,7 +86,7 @@ public class LogicUIManager : MonoBehaviour
                 for (int i = m_LogicCards.Count - 1; i >= 0; i--)
                     if (eventData.position.x >= m_LogicCards[i].transform.position.x)
                     {
-                        CardIndex = i+1;
+                        CardIndex = i + 1;
                         break;
                     }
             }
