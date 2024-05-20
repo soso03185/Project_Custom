@@ -996,9 +996,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterState: 0
-  monsterHPBar: {fileID: 0}
+  monsterHP: 100
+  attack: 2
+  defense: 0
+  attackSpeed: 0
+  attackRange: 2
+  moveSpeed: 2
   target: {fileID: 0}
-  monsterID: 2003
   manager: {fileID: 0}
 --- !u!136 &8350257378555581540
 CapsuleCollider:

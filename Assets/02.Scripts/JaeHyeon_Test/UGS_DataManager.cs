@@ -18,8 +18,7 @@ public class UGS_DataManager : MonoBehaviour
     {
         User = 0,
         Standard = 1,
-        Monster = 2,
-        Stage = 3
+        Monster = 2
     }
 
     void Awake()
@@ -32,6 +31,7 @@ public class UGS_DataManager : MonoBehaviour
         UserDataLocalLoad();
         StandardDataLocalLoad();
         MonsterDataLocalLoad();
+
         //StageDataLocalLoad();
     }
 
@@ -110,31 +110,6 @@ public class UGS_DataManager : MonoBehaviour
         }, true);
     }
 
-    //public void StageDataLocalLoad()
-    //{
-    //    Debug.Log("StageData_LocalLoad");
-
-    //    m_StageDataDic.Clear();
-
-    //    foreach(var value in ProjectCustom_StageData.StageData.StageDataList)
-    //    {
-    //        m_StageDataDic.Add(value.StageLevel, value);
-    //    }
-    //}
-
-    //public void StageDataLiveLoad()
-    //{
-    //    Debug.Log("StageData_LiveLoad");
-
-    //    m_StageDataDic.Clear();
-
-    //    UnityGoogleSheet.LoadFromGoogle<int, ProjectCustom_StageData.StageData>((list, map) => {
-    //        list.ForEach(x => {
-    //            m_StageDataDic.Add(x.StageLevel, x);
-    //        });
-    //    }, true);
-    //}
-
     //------------------------------------ Show ------------------------------------
     [VisibleEnum(typeof(ShowDataType))]
     public void ShowData(int _showDataType)
@@ -159,8 +134,8 @@ public class UGS_DataManager : MonoBehaviour
                         Debug.Log($"MonsterName: {child.Value.Name}, MonsterID: {child.Value.MonsterID}");
                 }
                 break;
-
         }
     }
+
 
 }

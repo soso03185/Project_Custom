@@ -12,7 +12,6 @@ public class DemoMonster : MonoBehaviour
     [SerializeField]
     public MonsterState monsterState = MonsterState.spawn;
 
-    public float m_monsterHp;
     
     //joohong
     private GameObject m_canvas;
@@ -23,35 +22,53 @@ public class DemoMonster : MonoBehaviour
 
     private GameObject m_HpBar;
 
+    [SerializeField]
+    float m_monsterHp;
+
+    public float MonsterHP
+    {
+        get 
+        { 
+            return m_monsterHp;
+        }
+        set
+        {
+            if (monsterState != MonsterState.spawn)
+                m_monsterHp = value;
+        }
+    }
+
+    public float attack;
+    public float defense;
+    public float attackSpeed;
+    public float attackRange;
+
+    public int moveSpeed;
+
     public Transform target;
     Animator anim;
 
-    public DataManager.MonsterInfo monsterInfo;
-    public int monsterID;
-
     public MonsterManager manager;
-    
+
     void Awake()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
         anim = GetComponent<Animator>();
+
+        manager = GameObject.Find("MonsterManager").GetComponent<MonsterManager>();
+        manager.AddMonster(this);
 
         //joohong
         m_canvas = GameObject.Find("Canvas");
 
         m_HpBar = Instantiate(monsterHPBar, Vector3.zero, Quaternion.identity, m_canvas.transform);
         m_HpBar.GetComponent<MonsterHpUI>().SetMonster(this.gameObject);
-
     }
 
     // 활성화 될 때마다 실행됨
     private void OnEnable()
     {
         ResetMonster();
-    }
-    private void Start()
-    {
-        monsterInfo = Managers.Data.GetMonsterInfo(monsterID);
     }
 
     void Update()
@@ -84,7 +101,7 @@ public class DemoMonster : MonoBehaviour
 
     void UpdateBase()
     {
-        if (monsterInfo.Hp == 0)
+        if (m_monsterHp == 0)
         {
             ChangeState(MonsterState.dead);
         }
@@ -103,8 +120,8 @@ public class DemoMonster : MonoBehaviour
     void UpdateMove()
     {
         this.gameObject.GetComponent<Rigidbody>().mass = 1;
-        transform.position += LookAtPlayer() * monsterInfo.MoveSpeed * Time.deltaTime;
-        if (GetDistance(target.position, transform.position) < monsterInfo.AttackRange)
+        transform.position += LookAtPlayer() * moveSpeed * Time.deltaTime;
+        if (GetDistance(target.position, transform.position) < attackRange)
         {
             ChangeState(MonsterState.attack);
         }
@@ -116,7 +133,7 @@ public class DemoMonster : MonoBehaviour
         anim.SetBool("isAttack", true);
         this.gameObject.GetComponent<Rigidbody>().mass = 10000f;
 
-        if (GetDistance(target.position, transform.position) > monsterInfo.AttackRange)
+        if (GetDistance(target.position, transform.position) > attackRange)
         {
             anim.SetBool("isAttack", false);
             ChangeState(MonsterState.move);
@@ -137,15 +154,12 @@ public class DemoMonster : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 5);
+
         //this.gameObject.SetActive(false);
 
         // 오브젝트 풀 통해서 관리하기
         Managers.Pool.GetPool(this.gameObject.name).ReturnObject(this.gameObject);
         m_HpBar.SetActive(false);
-
-        // 초기화
-        monsterInfo.Hp = Managers.Data.UGS_Data.m_MonsterDataDic[monsterID].Hp;
-
     }
 
     void ChangeState(MonsterState state)
@@ -192,13 +206,13 @@ public class DemoMonster : MonoBehaviour
     // JaeHyeon
     void IsDamaged(float damage)
     {
-        monsterInfo.Hp -= ((int)damage - monsterInfo.Defense);
+        m_monsterHp -= ((int)damage - defense);
     }
 
     void ReturnFromHit()
     {
         anim.SetBool("isHit", false);
-        if (GetDistance(target.position, transform.position) < monsterInfo.AttackRange)
+        if (GetDistance(target.position, transform.position) < attackRange)
         {
             ChangeState(MonsterState.attack);
         }
@@ -211,6 +225,7 @@ public class DemoMonster : MonoBehaviour
     void ResetMonster()
     {
         ChangeState(MonsterState.spawn);
+        m_monsterHp = 100;
         
         //joohong
         m_HpBar.SetActive(true);

@@ -22,10 +22,6 @@ public class PoolManager
 
     public ObjectPool GetPool(string path)
     {
-        if (path.Contains("(Clone)"))
-        {
-          path = path.Substring(0, path.Length - 7);
-        }
         foreach(var pool in pools)
         {
             if (pool.Key == path)

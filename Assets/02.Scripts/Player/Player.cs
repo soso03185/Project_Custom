@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 public class Player : MonoBehaviour
 {
     public ActionLogicManager m_logicManager;
-
     // Start is called before the first frame update
     void Start()
     {
