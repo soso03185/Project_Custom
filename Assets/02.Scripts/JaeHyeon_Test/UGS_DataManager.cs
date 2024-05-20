@@ -20,7 +20,8 @@ public class UGS_DataManager : MonoBehaviour
     {
         User = 0,
         Standard = 1,
-        Monster = 2
+        Monster = 2,
+        Stage = 3
     }
 
     void Awake()
@@ -111,6 +112,7 @@ public class UGS_DataManager : MonoBehaviour
         }, true);
     }
 
+
     public void StageDataLocalLoad()
     {
         Debug.Log("StageData_LocalLoad");
@@ -162,7 +164,6 @@ public class UGS_DataManager : MonoBehaviour
                         Debug.Log($"MonsterName: {child.Value.Name}, MonsterID: {child.Value.MonsterID}");
                 }
                 break;
-
             case (int)ShowDataType.Stage:
                 {
                     foreach (var child in m_StageDataDic)
@@ -171,6 +172,5 @@ public class UGS_DataManager : MonoBehaviour
                 break;
         }
     }
-
 
 }

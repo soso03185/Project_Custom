@@ -5,8 +5,8 @@ using UnityEngine;
 public class Managers : MonoBehaviour
 {
     private static Managers s_instance;
-    public static Managers Instance
-    {
+    public static Managers Instance 
+    { 
         get
         {
             Init();
@@ -27,7 +27,6 @@ public class Managers : MonoBehaviour
     MonsterManager monsters = new MonsterManager();
     StageManager stage = new StageManager();
     RuneManager runes = new RuneManager();
-
     static void Init()
     {
         if (s_instance == null)
@@ -45,4 +44,3 @@ public class Managers : MonoBehaviour
         }
     }
 }
-

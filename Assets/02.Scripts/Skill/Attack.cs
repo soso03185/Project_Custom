@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Attack : Skill
 {
@@ -44,19 +45,11 @@ public class Attack : Skill
         }
         //출혈 효과 부여
 
-        yield return null;
+        yield return new WaitForSeconds(0.3f);
 
-        this.GetComponent<Collider>().enabled = false;
+        this.GetComponent<BoxCollider>().enabled = false;
         m_animator.SetBool(KeyIsAttack, false);
 
         playerObject.SkillEnd();
-    }
-
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.gameObject.CompareTag("Monster"))
-        {
-            Debug.Log("Hit");
-        }
     }
 }

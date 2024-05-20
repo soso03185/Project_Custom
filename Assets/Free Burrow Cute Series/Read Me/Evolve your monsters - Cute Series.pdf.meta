@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Free Burrow Cute Series/Read Me/Evolve your monsters - Cute Series.pdf.meta
 guid: db7d0ef59350cfa469242d0a974fdc75
 DefaultImporter:
+========
+guid: 79db794f7781e5d4ab939b9dcf9067ba
+PrefabImporter:
+>>>>>>>> parent of 81662e4 (Merge branch 'develop' of https://github.com/soso03185/Project_Custom into develop):Assets/03.Prefabs/Skill-WideAreaAttack.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

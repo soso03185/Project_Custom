@@ -22,57 +22,37 @@ public class DemoMonster : MonoBehaviour
 
     private GameObject m_HpBar;
 
-    [SerializeField]
-    float m_monsterHp;
-
-    public float MonsterHP
-    {
-        get 
-        { 
-            return m_monsterHp;
-        }
-        set
-        {
-            if (monsterState != MonsterState.spawn)
-                m_monsterHp = value;
-        }
-    }
-
-    public float attack;
-    public float defense;
-    public float attackSpeed;
-    public float attackRange;
-
-    public int moveSpeed;
-
     public Transform target;
     Animator anim;
-
-    public MonsterInfo monsterInfo;
 
     public int monsterID;
 
     public MonsterManager manager;
 
+    public DataManager.MonsterInfo monsterInfo;
+
+    
     void Awake()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
         anim = GetComponent<Animator>();
-
-        manager = GameObject.Find("MonsterManager").GetComponent<MonsterManager>();
-        manager.AddMonster(this);
 
         //joohong
         m_canvas = GameObject.Find("Canvas");
 
         m_HpBar = Instantiate(monsterHPBar, Vector3.zero, Quaternion.identity, m_canvas.transform);
         m_HpBar.GetComponent<MonsterHpUI>().SetMonster(this.gameObject);
+
     }
 
     // 활성화 될 때마다 실행됨
     private void OnEnable()
     {
         ResetMonster();
+    }
+    private void Start()
+    {
+        monsterInfo = Managers.Data.GetMonsterInfo(monsterID);
     }
 
     void Update()
@@ -128,8 +108,8 @@ public class DemoMonster : MonoBehaviour
     {
 
         this.gameObject.GetComponent<Rigidbody>().mass = 1;
-        transform.position += LookAtPlayer() * moveSpeed * Time.deltaTime;
-        if (GetDistance(target.position, transform.position) < attackRange)
+        transform.position += LookAtPlayer() * monsterInfo.MoveSpeed * Time.deltaTime;
+        if (GetDistance(target.position, transform.position) < monsterInfo.AttackRange)
         {
             ChangeState(MonsterState.attack);
         }
@@ -141,7 +121,7 @@ public class DemoMonster : MonoBehaviour
         anim.SetBool("isAttack", true);
         this.gameObject.GetComponent<Rigidbody>().mass = 10000f;
 
-        if (GetDistance(target.position, transform.position) > attackRange)
+        if (GetDistance(target.position, transform.position) > monsterInfo.AttackRange)
         {
             anim.SetBool("isAttack", false);
             ChangeState(MonsterState.move);
@@ -202,7 +182,7 @@ public class DemoMonster : MonoBehaviour
     // JaeHyeon
     void IsDamaged(float damage)
     {
-        m_monsterHp -= ((int)damage - defense);
+        monsterInfo.Hp -= ((int)damage - monsterInfo.Defense);
     }
 
 
@@ -225,7 +205,7 @@ public class DemoMonster : MonoBehaviour
     void AnimEventHit()
     {
         anim.SetBool("isHit", false);
-        if (GetDistance(target.position, transform.position) < attackRange)
+        if (GetDistance(target.position, transform.position) < monsterInfo.AttackRange)
         {
             ChangeState(MonsterState.attack);
         }
@@ -240,7 +220,6 @@ public class DemoMonster : MonoBehaviour
     {
         Managers.Stage.deadMonsterCount++;
         ChangeState(MonsterState.spawn);
-        m_monsterHp = 100;
         
         //joohong
         m_HpBar.SetActive(true);

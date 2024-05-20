@@ -660,6 +660,7 @@ MonoBehaviour:
   monsterHPBar: {fileID: 825477410733528157, guid: 73b4e240388df6e4a849aadc4585901c,
     type: 3}
   target: {fileID: 0}
+<<<<<<< HEAD
   monsterInfo:
     MonsterID: 0
     Name: 
@@ -675,6 +676,10 @@ MonoBehaviour:
     Goods: 0
     Goods2: 0
   monsterID: 2002
+=======
+  monsterID: 2002
+  manager: {fileID: 0}
+>>>>>>> parent of 81662e4 (Merge branch 'develop' of https://github.com/soso03185/Project_Custom into develop)
 --- !u!136 &1281440336418130424
 CapsuleCollider:
   m_ObjectHideFlags: 0
