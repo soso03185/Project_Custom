@@ -1,15 +1,14 @@
-using GoogleSheet.Type;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Define
+public class Define 
 {
-    public enum MonsterState
+    public enum MonsterState 
     {
         spawn,
         move,
-        attack,
+        attack, 
         hit,
         dead
     };
@@ -17,13 +16,19 @@ public class Define
     public enum MonsterName
     {
         Fox,
-        Skeleton
+        Skeleton,
+        Slime
     }
 
     public enum SpawnType
     {
-        Noraml,
+        Normal,
         Delay,
-        Group
+        Group,
+        Boss
     }
+
+
+
 }
+
