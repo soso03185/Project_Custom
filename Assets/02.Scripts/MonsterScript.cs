@@ -220,7 +220,9 @@ public class DemoMonster : MonoBehaviour
     {
         Managers.Stage.deadMonsterCount++;
         ChangeState(MonsterState.spawn);
-        
+
+        Managers.Pool.GetPool(this.gameObject.name).ReturnObject(this.gameObject);
+
         //joohong
         m_HpBar.SetActive(true);
     }

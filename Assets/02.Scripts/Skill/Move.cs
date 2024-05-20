@@ -12,7 +12,7 @@ public class Move : Skill
 
     //public Sprite image;
 
-    public float playerSpeed;
+    public float playerSpeed = 1;
     public float attackRange;
     private float _targetDistance = 0;
 
@@ -43,7 +43,7 @@ public class Move : Skill
 
         while (true)
         {
-            Vector3 direction = (target.transform.position - playerObject.transform.position).normalized;
+             Vector3 direction = (target.transform.position - playerObject.transform.position).normalized;
 
             direction.y = 0;
 
