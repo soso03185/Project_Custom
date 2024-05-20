@@ -13,17 +13,8 @@ public class LogicSettingUI_Slot : Slot
     {
         base.OnDrop(eventData);
 
-        //m_logicManager.m_actionLogic[m_slotIndex] =IconDrag.m_beginDraggedIcon.GetComponent<LogicSetttingUI_SkillIcon>().m_Skill;
+        m_logicManager.m_actionLogic[m_slotIndex] =
+            IconDrag.m_beginDraggedIcon.GetComponent<LogicSetttingUI_SkillIcon>().m_Skill;
 
-    }
-
-    public void Set()
-    {
-        if (this.transform.childCount == 0)
-        {
-            return;
-        }
-        Skill skill = GetComponentInChildren<LogicSetttingUI_SkillIcon>().m_Skill;
-        m_logicManager[m_slotIndex] = skill;
     }
 }

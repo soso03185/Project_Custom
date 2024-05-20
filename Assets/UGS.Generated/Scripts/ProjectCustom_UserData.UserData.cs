@@ -76,7 +76,6 @@ namespace ProjectCustom_UserData
 		public System.Int32 Goods2;
 		public System.Int32 Goods3;
 		public System.Int32 Costume;
-		public System.Int32 StageLevel;
   
 
 #region fuctions

@@ -12,7 +12,7 @@ public class Move : Skill
 
     //public Sprite image;
 
-    public float playerSpeed = 1;
+    public float playerSpeed;
     public float attackRange;
     private float _targetDistance = 0;
 
@@ -20,7 +20,7 @@ public class Move : Skill
 
     void Start()
     {
-        m_monsterManager = Managers.Monsters;
+
     }
     public override IEnumerator Play(Player playerObject)
     {
@@ -31,7 +31,7 @@ public class Move : Skill
 
         while (true)
         {
-            target = m_monsterManager.GetNearestMonster(playerObject);
+            target = m_monsterManager.GetNearestMonster();
 
             if (target != null)
             {
@@ -43,14 +43,11 @@ public class Move : Skill
 
         while (true)
         {
-             Vector3 direction = (target.transform.position - playerObject.transform.position).normalized;
+            Vector3 direction = (target.transform.position - playerObject.transform.position).normalized;
 
             direction.y = 0;
 
-            if (direction != Vector3.zero)
-            {
-                playerObject.transform.rotation = Quaternion.LookRotation(direction);
-            }
+            playerObject.transform.rotation = Quaternion.LookRotation(direction);
 
             _targetDistance = Vector3.Distance(target.transform.position, playerObject.transform.position);
 

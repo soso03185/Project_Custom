@@ -58,16 +58,7 @@ namespace ProjectCustom_StageData
 
 		public System.Int32 Key;
 		public System.Int32 StageLevel;
-		public System.Int32 MaxMonsterCount;
-		public System.String Monster1Name;
-		public System.Int32 Monster1Count;
-		public System.String SpawnOption1;
-		public System.String Monster2Name;
-		public System.Int32 Monster2Count;
-		public System.String SpawnOption2;
-		public System.Int32 IsBossStage;
-		public System.String BossMonster;
-		public System.Int32 MonsterTypeCount;
+		public System.Int32 maxMonsterCount;
   
 
 #region fuctions

@@ -63,7 +63,6 @@ public class ObjectPool
             activeCount++;
         }
 
-        Managers.Monsters.AddMonster(select);
         return select;
     }
 
@@ -84,11 +83,10 @@ public class ObjectPool
 
         if (!select)
         {
-            select = Managers.Resoruce.Instantiate(path, parentTransform);
+            select = Managers.Resoruce.Instantiate(path, parentTransform); ;
             objectsList.Add(select);
             activeCount++;
         }
-
 
         return select;
     }
@@ -98,6 +96,5 @@ public class ObjectPool
     {
         obj.SetActive(false);
         activeCount--;
-        Managers.Monsters.DeleteMonster(obj);
     }
 }

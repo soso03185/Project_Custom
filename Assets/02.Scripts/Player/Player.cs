@@ -6,11 +6,10 @@ using UnityEngine.UIElements;
 public class Player : MonoBehaviour
 {
     public ActionLogicManager m_logicManager;
-
     // Start is called before the first frame update
     void Start()
     {
-        ActivateSkill(m_logicManager[m_logicManager.m_currentIndex]);
+        ActivateSkill(m_logicManager.m_actionLogic[m_logicManager.m_currentIndex]);
     }
 
     // Update is called once per frame
@@ -26,9 +25,9 @@ public class Player : MonoBehaviour
     public void SkillEnd()
     {
         m_logicManager.NextAction();
-        if (m_logicManager[m_logicManager.m_currentIndex])
+        if (m_logicManager.m_actionLogic[m_logicManager.m_currentIndex])
         {
-            ActivateSkill(m_logicManager[m_logicManager.m_currentIndex]);
+            ActivateSkill(m_logicManager.m_actionLogic[m_logicManager.m_currentIndex]);
         }
         else
         {
