@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/TBN STUDIO/CHARACTERS/JASON/Materials.meta
 guid: 5dcba07ac88284c4cb48d8bec24f6c54
+========
+guid: 969a9813d079ba9429bdc22f61e8568d
+>>>>>>>> parent of e593e0e (Revert !!!!!!!!!!!):Assets/Free Burrow Cute Series/Materials.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

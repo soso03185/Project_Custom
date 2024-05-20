@@ -1,24 +1,9 @@
 fileFormatVersion: 2
-guid: 620a6fe661f96d240af363d01625316a
+guid: 7bcd678f6c6cc1b4ba4f2d4331cd78ec
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Cloths
-    second: {fileID: 2100000, guid: e4f0bc5b3e28ba64699a3f8a18e6c3cd, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Corpo
-    second: {fileID: 2100000, guid: e3f7c3b8d21dac148bad90b7bbd3396e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: hairs
-    second: {fileID: 2100000, guid: bd10db54c21ddde4d8fe5e4e223f15e3, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -31,7 +16,8 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Invalid copied Avatar Rig Configuration:\n\tNo human bone found.
+      Ensure both rig type match\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
