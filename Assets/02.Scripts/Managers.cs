@@ -18,7 +18,7 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance.pool; } }
     public static DataManager Data { get { return Instance.data; } }
     public static MonsterManager Monsters { get { return Instance.monsters; } }
-    public static RuneManager Runes { get { return Instance.runes; }
+    public static RuneManager Runes { get { return Instance.runes; } }
 
     PoolManager pool = new PoolManager();
     ResourceManager resource = new ResourceManager();
