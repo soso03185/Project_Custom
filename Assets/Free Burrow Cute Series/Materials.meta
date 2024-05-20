@@ -1,9 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 <<<<<<<< HEAD:Assets/Free Burrow Cute Series/Materials.meta
 guid: 969a9813d079ba9429bdc22f61e8568d
 ========
 guid: e838d51301994a84c9b5b3ab5d7c90dc
 >>>>>>>> parent of e593e0e (Revert !!!!!!!!!!!):Assets/Free Burrow Cute Series/Prefabs.meta
+=======
+guid: 969a9813d079ba9429bdc22f61e8568d
+>>>>>>> parent of e593e0e (Revert !!!!!!!!!!!)
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
