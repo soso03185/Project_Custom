@@ -7,8 +7,6 @@ TagManager:
   - Monster
   - Skill
   - Enemy
-  - NestedScrollManager
-  - LogicUIManager
   layers:
   - Default
   - TransparentFX
