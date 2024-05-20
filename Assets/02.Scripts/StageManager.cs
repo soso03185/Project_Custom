@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
+using UnityEngine.SceneManagement;
 
 public class StageManager
 {
@@ -101,5 +102,10 @@ public class StageManager
     public void RestartStage(int stageLevel)
     {
         BeginStage(stageLevel);
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

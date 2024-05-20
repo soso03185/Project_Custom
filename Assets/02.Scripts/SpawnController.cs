@@ -63,7 +63,36 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    IEnumerator NormalSpawn(int maxMonsterCount, string _monsterName, int stageMaxMonster)
+    private void Start()
+    {
+        StartSpawning();
+    }
+
+    public void StartSpawning()
+    {
+        int monsterListSize = spawnList.Count;
+
+        for (int i = 0; i < monsterListSize; i++)
+        {
+            if (spawnList[i].isSpawn)
+            {
+                switch (spawnList[i].spawnType)
+                {
+                    case SpawnType.Noraml:
+                        StartCoroutine(this.NormalSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
+                        break;
+                    case SpawnType.Delay:
+                        StartCoroutine(this.DelaySpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
+                        break;
+                    case SpawnType.Group:
+                        StartCoroutine(this.GroupSpawn(spawnList[i].maxMonsterCount, spawnList[i].monsterName.ToString()));
+                        break;
+                }
+            }
+        }
+    }
+
+    IEnumerator NormalSpawn(int maxmonsterCount, string _monsterName)
     {
         while(!isGameOver)
         {

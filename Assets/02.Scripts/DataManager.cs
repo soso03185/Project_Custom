@@ -154,6 +154,4 @@ public class DataManager
             Application.Quit();
         }
 
-        return stageInfo;
-    }
 }
