@@ -39,20 +39,27 @@ public class DemoMonster : MonoBehaviour
 
         //joohong
         m_canvas = GameObject.Find("Canvas");
-
-        m_HpBar = Instantiate(monsterHPBar, Vector3.zero, Quaternion.identity, m_canvas.transform);
-        m_HpBar.GetComponent<MonsterHpUI>().SetMonster(this.gameObject);
-
     }
 
     // 활성화 될 때마다 실행됨
     private void OnEnable()
     {
         ResetMonster();
+        if(m_HpBar != null)
+            m_HpBar.SetActive(true);
     }
+
+    private void OnDisable()
+    {
+        if (m_HpBar != null)
+            m_HpBar.SetActive(false);
+    }
+
     private void Start()
     {
         monsterInfo = Managers.Data.GetMonsterInfo(monsterID);
+        m_HpBar = Instantiate(monsterHPBar, Vector3.zero, Quaternion.identity, m_canvas.transform);
+        m_HpBar.GetComponent<MonsterHpUI>().SetMonster(this.gameObject);
     }
 
     void Update()
@@ -182,16 +189,15 @@ public class DemoMonster : MonoBehaviour
     // JaeHyeon
     void IsDamaged(float damage)
     {
-        monsterInfo.Hp -= ((int)damage - monsterInfo.Defense);
+        monsterInfo.Hp -= ((int)damage * 5 - monsterInfo.Defense);
     }
 
 
     void ResetMonster()
     {
         ChangeState(MonsterState.spawn);
-        
-        //joohong
-        m_HpBar.SetActive(true);
+
+        monsterInfo.Hp = 100;
     }
 
 
@@ -221,9 +227,6 @@ public class DemoMonster : MonoBehaviour
         Managers.Stage.deadMonsterCount++;
         ChangeState(MonsterState.spawn);
 
-        Managers.Pool.GetPool(this.gameObject.name).ReturnObject(this.gameObject);
-
-        //joohong
-        m_HpBar.SetActive(true);
+        Managers.Pool.GetPool(this.gameObject.name).ReturnObject(this.gameObject); 
     }
 }
