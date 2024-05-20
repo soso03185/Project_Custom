@@ -149,6 +149,11 @@ public class DataManager
         stageInfo.bossMonsterName = UGS_Data.m_StageDataDic[stageLevel].BossMonster;
         stageInfo.monsterTypeCount = UGS_Data.m_StageDataDic[stageLevel].MonsterTypeCount;
 
+        if (UGS_Data.m_StageDataDic[stageLevel] == null)
+        {
+            Application.Quit();
+        }
+
         return stageInfo;
     }
 }

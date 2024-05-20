@@ -46,6 +46,10 @@ public class SpawnController : MonoBehaviour
             case SpawnType.Group:
                 StartCoroutine(this.GroupSpawn(monsterCount, monsterName, stageMaxMonsterCount));
                 break;
+            case SpawnType Boss:
+                StartCoroutine(this.BossSpawn(monsterCount, monsterName, stageMaxMonsterCount));
+                StopCoroutine(BossSpawn(monsterCount, monsterName, stageMaxMonsterCount));
+                break;
         }
     }
 
@@ -66,6 +70,26 @@ public class SpawnController : MonoBehaviour
             int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
 
             if(monsterCount < maxMonsterCount && spawnMonsterCount < stageMaxMonster)
+            {
+                Vector3 spawnPosition = GetRandomPositionAroundPlayer();
+
+                yield return new WaitForSeconds(normalSpawnTime);
+                SpawnMonster(_monsterName, spawnPosition, stageMaxMonster);
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+    }
+
+    IEnumerator BossSpawn(int maxMonsterCount, string _monsterName, int stageMaxMonster)
+    {
+        while (!isGameOver)
+        {
+            int monsterCount = Managers.Pool.GetPool(_monsterName).activeCount;
+
+            if (monsterCount < maxMonsterCount && spawnMonsterCount < stageMaxMonster)
             {
                 Vector3 spawnPosition = GetRandomPositionAroundPlayer();
 

@@ -287,7 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerDead: 0
   isStageClear: 0
-  currentStage: 0
+  currentStage: 5
 --- !u!4 &192013440
 Transform:
   m_ObjectHideFlags: 0
@@ -409,79 +409,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1001 &387255930
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 306093004432157140, guid: 57ea3e972d9fe114b9dcd4be4c54dec9,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 84
-      objectReference: {fileID: 0}
-    - target: {fileID: 8625846091456223491, guid: 57ea3e972d9fe114b9dcd4be4c54dec9,
-        type: 3}
-      propertyPath: m_Name
-      value: Slime
-      objectReference: {fileID: 0}
-    - target: {fileID: 9006911170124235705, guid: 57ea3e972d9fe114b9dcd4be4c54dec9,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.2123806
-      objectReference: {fileID: 0}
-    - target: {fileID: 9006911170124235705, guid: 57ea3e972d9fe114b9dcd4be4c54dec9,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.00000011920929
-      objectReference: {fileID: 0}
-    - target: {fileID: 9006911170124235705, guid: 57ea3e972d9fe114b9dcd4be4c54dec9,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 6.153161
-      objectReference: {fileID: 0}
-    - target: {fileID: 9006911170124235705, guid: 57ea3e972d9fe114b9dcd4be4c54dec9,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9006911170124235705, guid: 57ea3e972d9fe114b9dcd4be4c54dec9,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9006911170124235705, guid: 57ea3e972d9fe114b9dcd4be4c54dec9,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9006911170124235705, guid: 57ea3e972d9fe114b9dcd4be4c54dec9,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9006911170124235705, guid: 57ea3e972d9fe114b9dcd4be4c54dec9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9006911170124235705, guid: 57ea3e972d9fe114b9dcd4be4c54dec9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9006911170124235705, guid: 57ea3e972d9fe114b9dcd4be4c54dec9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 57ea3e972d9fe114b9dcd4be4c54dec9, type: 3}
 --- !u!1 &415832219
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,13 +710,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 4368944211882816910}
   spawnMonsterCount: 0
-  spawnRadius: 10
+  spawnRadius: 20
   groupSpawnMinRange: 3
   groupSpawnMaxRange: 7
-  normalSpawnTime: 0.2
-  delaySpawnTimeMin: 0.3
-  delaySpawnTimeMax: 0.7
-  groupSpawnTime: 1
+  normalSpawnTime: 0.5
+  delaySpawnTimeMin: 0.5
+  delaySpawnTimeMax: 1.2
+  groupSpawnTime: 3
 --- !u!4 &573357771
 Transform:
   m_ObjectHideFlags: 0
@@ -7262,4 +7189,3 @@ SceneRoots:
   - {fileID: 1912721965}
   - {fileID: 380365423}
   - {fileID: 192013440}
-  - {fileID: 387255930}

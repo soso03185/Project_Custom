@@ -24,7 +24,8 @@ public class Define
     {
         Normal,
         Delay,
-        Group
+        Group,
+        Boss
     }
 
 

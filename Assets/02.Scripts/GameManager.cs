@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     public void Init()
     {
         userInfo = Managers.Data.GetUserInfo(1001);
-        currentStage = userInfo.StageLevel;
+        //currentStage = userInfo.StageLevel;
         Managers.Stage.BeginStage(currentStage);
     }
 
@@ -45,11 +45,11 @@ public class GameManager : MonoBehaviour
     {
         if(GameOver())
         {
-            Managers.Stage.RestartStage();
+            Managers.Stage.RestartStage(currentStage);
         }
         else if(Managers.Stage.isStageClear())
         {
-            Managers.Stage.LevelUpStage();
+            Managers.Stage.LevelUpStage(currentStage);
         }
     }
 

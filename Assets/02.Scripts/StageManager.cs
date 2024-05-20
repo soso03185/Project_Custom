@@ -10,7 +10,7 @@ public class StageManager
     // 현재 스테이지
 
     // 스테이지 레벨
-    public int stageLevel = 1;
+    //public int stageLevel = 1;
     // 스테이지 레벨 UI
     public TextMeshProUGUI stageLevelUI;
     // 그 스테이지의 몬스터 수
@@ -46,6 +46,7 @@ public class StageManager
 
     SpawnOptions monster1Spawn;
     SpawnOptions monster2Spawn;
+    SpawnOptions bossSpawn;
 
     public void BeginStage(int stageLevel)
     {
@@ -61,13 +62,18 @@ public class StageManager
         spawnList.Add(monster1Spawn);
         spawnList.Add(monster2Spawn);
 
+        if(stageInfo.isBossStage)
+        {
+            SpawnController.spawnInstance.StartSpawning(stageInfo.maxMonsterCount, 1, stageInfo.bossMonsterName, SpawnType.Boss);
+        }
+
         foreach(var temp in spawnList)
         {
             SpawnController.spawnInstance.StartSpawning(stageInfo.maxMonsterCount, temp.monsterCount, temp.monsterName.ToString(), temp.spawnType);
         }
     }
 
-    public void LevelUpStage()
+    public void LevelUpStage(int stageLevel)
     {
         deadMonsterCount = 0;
         stageLevel++;
@@ -92,7 +98,7 @@ public class StageManager
             return false;
     }
 
-    public void RestartStage()
+    public void RestartStage(int stageLevel)
     {
         BeginStage(stageLevel);
     }

@@ -18,6 +18,7 @@ public class PoolManager
     {
         CreatePool("Fox", 100);
         CreatePool("Skeleton", 100);
+        CreatePool("Slime", 1);
     }
 
     public ObjectPool GetPool(string path)
