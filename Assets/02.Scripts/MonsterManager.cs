@@ -3,17 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MonsterManager
+public class MonsterManager : MonoBehaviour
 {
-    public List<GameObject> monsters = new List<GameObject>();
-  
+    public List<DemoMonster> monsters = new List<DemoMonster>();
+    public Player player;
+    // Start is called before the first frame update
+    void Start()
+    {
 
-    public void AddMonster(GameObject monster)
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (monsters.Count != 0)
+        {
+            //Debug.Log(monsters[0].transform);
+        }
+    }
+
+    public void AddMonster(DemoMonster monster)
     {
         monsters.Add(monster);
     }
 
-    public void DeleteMonster(GameObject monster)
+    public void DeleteMonster(DemoMonster monster)
     {
         for (int i = 0; i < monsters.Count; i++)
         {
@@ -25,7 +39,7 @@ public class MonsterManager
         }
     }
 
-    public GameObject GetNearestMonster(Player player)
+    public GameObject GetNearestMonster()
     {
         if(monsters.Count == 0)
             return null;
@@ -37,21 +51,6 @@ public class MonsterManager
 
         int index = distances.ToList().IndexOf(minDistance);
 
-        return monsters[index];
-    }
-
-    public GameObject GetFarthestMonster(Player player)
-    {
-        if (monsters.Count == 0)
-            return null;
-
-        var distances =
-            monsters.Select(monster => Vector3.Distance(player.transform.position, monster.transform.position));
-
-        float maxDistance = distances.Max();
-
-        int index = distances.ToList().IndexOf(maxDistance);
-
-        return monsters[index];
+        return monsters[index].gameObject;
     }
 }

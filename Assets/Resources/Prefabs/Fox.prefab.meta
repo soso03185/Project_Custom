@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/03.Prefabs/LogicSettingIcon.prefab.meta
 guid: 9413d4f6e44809141b14ad246e65e9d5
+========
+guid: b5c2a4122fa751c49aa63fa87e4f3d7d
+>>>>>>>> LeeJeongHan:Assets/Resources/Prefabs/Fox.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
