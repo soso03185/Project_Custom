@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class Attack : Skill
 {
-    private const string KeyIsAttack = "Attack_3Combo_ALL";
+    private const string KeyIsAttack = "IsAttack";
     public void Start()
     {
     }
@@ -27,7 +27,7 @@ public class Attack : Skill
 
         for(int i = 0; i < atkCount; i++)
         {
-            while (!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_ALL_Inplace"))
+            while (!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_3_Inplace"))
             {
                 yield return null;
             }
