@@ -7055,8 +7055,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278518015
+  m_fontColor: {r: 1, g: 0, b: 0.018271446, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -15324,8 +15324,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278518015
+  m_fontColor: {r: 1, g: 0, b: 0.018271446, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -16287,8 +16287,8 @@ MonoBehaviour:
   - {fileID: 1757852253}
   - {fileID: 1121200990}
   IdleSprite:
-  - {fileID: 21300000, guid: 9e59d774f83497f4381f5a2ca148a106, type: 3}
-  - {fileID: 21300000, guid: 9e59d774f83497f4381f5a2ca148a106, type: 3}
+  - {fileID: 21300000, guid: ffb034a79260559488ac7a59b5baec55, type: 3}
+  - {fileID: 21300000, guid: 3b55b40338393ff4e9b3993b59fbe01a, type: 3}
   - {fileID: 21300000, guid: 9e59d774f83497f4381f5a2ca148a106, type: 3}
   - {fileID: 21300000, guid: 9e59d774f83497f4381f5a2ca148a106, type: 3}
   SelectSprite:
