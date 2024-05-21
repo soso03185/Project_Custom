@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: f97f9843613c6814187431392ac138dd
+=======
+guid: 620a6fe661f96d240af363d01625316a
+>>>>>>> parent of a772215 (Delete TBN)
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []

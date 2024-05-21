@@ -1,16 +1,25 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 <<<<<<< HEAD:Assets/Plugins/Demigiant/DOTweenPro.meta
 guid: af55cfd0e7084ab4884c5a4f29b62d9f
 <<<<<<< HEAD
 =======
 guid: 5dcba07ac88284c4cb48d8bec24f6c54
 >>>>>>> parent of a772215 (Delete TBN):Assets/TBN STUDIO/CHARACTERS/JASON/Materials.meta
+=======
+<<<<<<<< HEAD:Assets/Plugins/Demigiant/DOTweenPro.meta
+guid: 168d871ec7c10f242a085a9bf83010ca
+========
+guid: 5dcba07ac88284c4cb48d8bec24f6c54
+>>>>>>>> parent of a772215 (Delete TBN):Assets/TBN STUDIO/CHARACTERS/JASON/Materials.meta
+>>>>>>> parent of a772215 (Delete TBN)
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+<<<<<<< HEAD
 =======
 labels:
 - Tween
@@ -34,3 +43,5 @@ folderAsset: yes
 DefaultImporter:
   userData: 
 >>>>>>> parent of ad62e54 (Merge branch 'develop' into KimJaeHyeon)
+=======
+>>>>>>> parent of a772215 (Delete TBN)

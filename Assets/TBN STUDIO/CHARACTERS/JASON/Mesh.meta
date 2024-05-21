@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 345be60a5dc0f1d46be5899e4d1dc5c8
+=======
+guid: 0eed5699c86200449acc31a15a4c06b8
+>>>>>>> parent of a772215 (Delete TBN)
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

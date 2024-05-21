@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: ab9f9afc4593fd04699168992b81f43e
+=======
+guid: 0dd6d2612057e0444a04ec22ad314a20
+>>>>>>> parent of a772215 (Delete TBN)
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
