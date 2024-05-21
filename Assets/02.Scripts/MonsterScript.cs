@@ -218,7 +218,10 @@ public class DemoMonster : MonoBehaviour
     void ResetMonster()
     {
         ChangeState(MonsterState.spawn);
+<<<<<<< HEAD
         m_monsterHp = 100;
+=======
+>>>>>>> parent of 9c91900 (2024.05.20)
         
         //joohong
         m_HpBar.SetActive(true);
