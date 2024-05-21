@@ -1,0 +1,34 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Plugins/Demigiant/DOTween.meta
+guid: a50bd9a009c8dfc4ebd88cc8101225a7
+<<<<<<< HEAD
+=======
+guid: fa4d9025ddf10f24b980854bf866a2ec
+>>>>>>> parent of a772215 (Delete TBN):Assets/TBN STUDIO/CHARACTERS.meta
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+=======
+labels:
+- Tween
+- Tweening
+- Animation
+- HOTween
+- Paths
+- iTween
+- DFTween
+- LeanTween
+- Ease
+- Easing
+- Shake
+- Punch
+- 2DToolkit
+- TextMeshPro
+- Text
+folderAsset: yes
+DefaultImporter:
+  userData: 
+>>>>>>> parent of ad62e54 (Merge branch 'develop' into KimJaeHyeon)
