@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using static DataManager;
 using static Define;
 
 public class DemoMonster : MonoBehaviour
@@ -12,7 +13,6 @@ public class DemoMonster : MonoBehaviour
     [SerializeField]
     public MonsterState monsterState = MonsterState.spawn;
 
-    
     //joohong
     private GameObject m_canvas;
 
@@ -22,53 +22,44 @@ public class DemoMonster : MonoBehaviour
 
     private GameObject m_HpBar;
 
-    [SerializeField]
-    float m_monsterHp;
-
-    public float MonsterHP
-    {
-        get 
-        { 
-            return m_monsterHp;
-        }
-        set
-        {
-            if (monsterState != MonsterState.spawn)
-                m_monsterHp = value;
-        }
-    }
-
-    public float attack;
-    public float defense;
-    public float attackSpeed;
-    public float attackRange;
-
-    public int moveSpeed;
-
     public Transform target;
     Animator anim;
 
+    public int monsterID;
+
     public MonsterManager manager;
+
+    public DataManager.MonsterInfo monsterInfo;
+
 
     void Awake()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
         anim = GetComponent<Animator>();
 
-        manager = GameObject.Find("MonsterManager").GetComponent<MonsterManager>();
-        manager.AddMonster(this);
-
         //joohong
         m_canvas = GameObject.Find("Canvas");
-
-        m_HpBar = Instantiate(monsterHPBar, Vector3.zero, Quaternion.identity, m_canvas.transform);
-        m_HpBar.GetComponent<MonsterHpUI>().SetMonster(this.gameObject);
     }
 
     // 활성화 될 때마다 실행됨
     private void OnEnable()
     {
         ResetMonster();
+        if (m_HpBar != null)
+            m_HpBar.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        if (m_HpBar != null)
+            m_HpBar.SetActive(false);
+    }
+
+    private void Start()
+    {
+        monsterInfo = Managers.Data.GetMonsterInfo(monsterID);
+        m_HpBar = Instantiate(monsterHPBar, Vector3.zero, Quaternion.identity, m_canvas.transform);
+        m_HpBar.GetComponent<MonsterHpUI>().SetMonster(this.gameObject);
     }
 
     void Update()
@@ -76,52 +67,56 @@ public class DemoMonster : MonoBehaviour
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
+        UpdateBase();
         switch (monsterState)
         {
             case MonsterState.spawn:
-                StartCoroutine(UpdateSpawn());
+                UpdateSpawn();
                 break;
             case MonsterState.move:
-                UpdateBase();
                 UpdateMove();
                 break;
             case MonsterState.attack:
-                UpdateBase();
                 UpdateAttack();
                 break;
             case MonsterState.hit:
-                StartCoroutine(UpdateHit());
-                UpdateBase();
+                UpdateHit();
                 break;
             case MonsterState.dead:
-                StartCoroutine(UpdateDead());
+                UpdateDead();
                 break;
         }
     }
 
     void UpdateBase()
     {
-        if (m_monsterHp == 0)
+        if (monsterInfo.Hp <= 0)
         {
             ChangeState(MonsterState.dead);
         }
     }
 
-    IEnumerator UpdateSpawn()
+    void UpdateSpawn()
     {
-        if(anim.GetCurrentAnimatorStateInfo(0).IsName("Spawn"))
+        LookAtPlayer();
+
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0)
         {
-            LookAtPlayer();
-            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+            return;
+        }
+        else
+        {
+            anim.SetTrigger("isSpawn");
             ChangeState(MonsterState.move);
         }
     }
 
     void UpdateMove()
     {
+
         this.gameObject.GetComponent<Rigidbody>().mass = 1;
-        transform.position += LookAtPlayer() * moveSpeed * Time.deltaTime;
-        if (GetDistance(target.position, transform.position) < attackRange)
+        transform.position += LookAtPlayer() * monsterInfo.MoveSpeed * Time.deltaTime;
+        if (GetDistance(target.position, transform.position) < monsterInfo.AttackRange)
         {
             ChangeState(MonsterState.attack);
         }
@@ -133,33 +128,22 @@ public class DemoMonster : MonoBehaviour
         anim.SetBool("isAttack", true);
         this.gameObject.GetComponent<Rigidbody>().mass = 10000f;
 
-        if (GetDistance(target.position, transform.position) > attackRange)
+        if (GetDistance(target.position, transform.position) > monsterInfo.AttackRange)
         {
             anim.SetBool("isAttack", false);
             ChangeState(MonsterState.move);
         }
     }
 
-    IEnumerator UpdateHit()
+    void UpdateHit()
     {
         anim.SetBool("isHit", true);
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-        ReturnFromHit();
     }
 
-    IEnumerator UpdateDead()
+
+    void UpdateDead()
     {
-        // 재화 및 경험치 얻는 처리?
         anim.SetBool("isDead", true);
-        yield return new WaitForSeconds(0.1f);
-
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 5);
-
-        //this.gameObject.SetActive(false);
-
-        // 오브젝트 풀 통해서 관리하기
-        Managers.Pool.GetPool(this.gameObject.name).ReturnObject(this.gameObject);
-        m_HpBar.SetActive(false);
     }
 
     void ChangeState(MonsterState state)
@@ -189,9 +173,15 @@ public class DemoMonster : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Skill"))
             {
-                Debug.Log("Hit");
                 ChangeState(MonsterState.hit);
-                IsDamaged(100);
+                if (other.gameObject.GetComponent<Attack>().criticalChance > Random.value * 100)
+                {
+                    IsDamaged(other.gameObject.GetComponent<Attack>().atk * other.gameObject.GetComponent<Attack>().criticalMultiplier);
+                }
+                else
+                {
+                    IsDamaged(other.gameObject.GetComponent<Attack>().atk);
+                }
             }
         }
     }
@@ -199,13 +189,29 @@ public class DemoMonster : MonoBehaviour
     // JaeHyeon
     void IsDamaged(float damage)
     {
-        m_monsterHp -= ((int)damage - defense);
+        monsterInfo.Hp -= ((int)damage * 5 - monsterInfo.Defense);
     }
 
-    void ReturnFromHit()
+
+    void ResetMonster()
+    {
+        ChangeState(MonsterState.spawn);
+
+        monsterInfo.Hp = 100;
+    }
+
+
+    void AnimEventSpawn()
+    {
+        anim.SetTrigger("isSpawn");
+        ChangeState(MonsterState.move);
+    }
+
+    // 피격 판정 후 상태 처리 이벤트 함수
+    void AnimEventHit()
     {
         anim.SetBool("isHit", false);
-        if (GetDistance(target.position, transform.position) < attackRange)
+        if (GetDistance(target.position, transform.position) < monsterInfo.AttackRange)
         {
             ChangeState(MonsterState.attack);
         }
@@ -215,16 +221,12 @@ public class DemoMonster : MonoBehaviour
         }
     }
 
-    void ResetMonster()
+    // 몬스터 삭제 이벤트 함수
+    void AnimEventDead()
     {
+        Managers.Stage.deadMonsterCount++;
         ChangeState(MonsterState.spawn);
-<<<<<<< HEAD
-        m_monsterHp = 100;
-=======
->>>>>>> parent of 9c91900 (2024.05.20)
-        
-        //joohong
-        m_HpBar.SetActive(true);
-    }
 
+        Managers.Pool.GetPool(this.gameObject.name).ReturnObject(this.gameObject);
+    }
 }

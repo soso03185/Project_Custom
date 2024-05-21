@@ -5,17 +5,23 @@ using UGS;
 using GoogleSheet.Type;
 using System;
 
+
 public class UGS_DataManager : MonoBehaviour
 {
-    Dictionary<int, ProjectCustom_UserData.UserData> m_UserDataDic = new Dictionary<int, ProjectCustom_UserData.UserData>();
-    Dictionary<int, ProjectCustom_UserData.StandardData> m_StandardDataDic = new Dictionary<int, ProjectCustom_UserData.StandardData>();
-    Dictionary<int, ProjectCustom_MonsterData.MonsterData> m_MonsterDataDic = new Dictionary<int, ProjectCustom_MonsterData.MonsterData>();
+    public Dictionary<int, ProjectCustom_UserData.UserData> m_UserDataDic = new Dictionary<int, ProjectCustom_UserData.UserData>();
+
+    public Dictionary<int, ProjectCustom_UserData.StandardData> m_StandardDataDic = new Dictionary<int, ProjectCustom_UserData.StandardData>();
+
+    public Dictionary<int, ProjectCustom_MonsterData.MonsterData> m_MonsterDataDic = new Dictionary<int, ProjectCustom_MonsterData.MonsterData>();
+
+    public Dictionary<int, ProjectCustom_StageData.StageData> m_StageDataDic = new Dictionary<int, ProjectCustom_StageData.StageData>();
 
     public enum ShowDataType
     {
         User = 0,
         Standard = 1,
-        Monster = 2
+        Monster = 2,
+        Stage = 3
     }
 
     void Awake()
@@ -28,6 +34,7 @@ public class UGS_DataManager : MonoBehaviour
         UserDataLocalLoad();
         StandardDataLocalLoad();
         MonsterDataLocalLoad();
+        StageDataLocalLoad();
     }
 
     //------------------------------------ StandardData ------------------------------------
@@ -105,11 +112,39 @@ public class UGS_DataManager : MonoBehaviour
         }, true);
     }
 
+
+    public void StageDataLocalLoad()
+    {
+        Debug.Log("StageData_LocalLoad");
+
+        m_StageDataDic.Clear();
+
+        foreach (var value in ProjectCustom_StageData.StageData.StageDataList)
+        {
+            m_StageDataDic.Add(value.StageLevel, value);
+        }
+    }
+
+    public void StageDataLiveLoad()
+    {
+        Debug.Log("StageData_LiveLoad");
+
+        m_StageDataDic.Clear();
+
+        UnityGoogleSheet.LoadFromGoogle<int, ProjectCustom_StageData.StageData>((list, map) =>
+        {
+            list.ForEach(x =>
+            {
+                m_StageDataDic.Add(x.StageLevel, x);
+            });
+        }, true);
+    }
+
     //------------------------------------ Show ------------------------------------
     [VisibleEnum(typeof(ShowDataType))]
     public void ShowData(int _showDataType)
     {
-        switch(_showDataType)
+        switch (_showDataType)
         {
             case (int)ShowDataType.User:
                 {
@@ -129,6 +164,13 @@ public class UGS_DataManager : MonoBehaviour
                         Debug.Log($"MonsterName: {child.Value.Name}, MonsterID: {child.Value.MonsterID}");
                 }
                 break;
+            case (int)ShowDataType.Stage:
+                {
+                    foreach (var child in m_StageDataDic)
+                        Debug.Log($"StageLevel: {child.Value.StageLevel}");
+                }
+                break;
         }
     }
+
 }
