@@ -18,10 +18,15 @@ public class PoolManager
     {
         CreatePool("Fox", 100);
         CreatePool("Skeleton", 100);
+        CreatePool("Slime", 1);
     }
 
     public ObjectPool GetPool(string path)
     {
+        if (path.Contains("(Clone)"))
+        {
+          path = path.Substring(0, path.Length - 7);
+        }
         foreach(var pool in pools)
         {
             if (pool.Key == path)
